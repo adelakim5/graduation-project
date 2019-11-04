@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load humanize %}
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>식당이름</th>
+            <th>요청유형</th>
+            <!-- type 만들어주기 -->
+            <th>인원</th>
+            <th>가격</th>
+            <th>총 금액</th>
+            <th>삭제</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for food_id in cart %}
+        {% with food=food_id.food %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td><a href="{{food.get_absolute_url}}" target="_blank">{{food_id.title}}</a></td>
+            <td>{{food_id.type}}</td>
+            <td>
+                <form action="{% url 'add_food' food_id=food.id %}" method="post">
+                    {% csrf_token %}
+                    {{food_id.}}
+                    {{food_id.quantity_form.quantity}}
+                    {{food_id.quantity_form.is_update}}
+                    <input type="submit" class="btn btn-success btn-sm" value="Update">
+                </form>
+            </td>
+            <td>{{food_id.price|intcomma}}</td>
+            <td>{{food_id.get_total_price|intcomma}}</td>
+            <td><a href="{% url 'remove_food' food_id=food.id %}" class="btn btn-sm btn-outline-warning">remove</a></td>
+        </tr>
+        {% endwith %}
+        {% endfor %}
+        <tr>
+            <td>
+                총 금액
+            </td>
+            <td colspan="5"></td>
+            <td class="num">{{cart.get_total_price|intcomma}}</td>
+        </tr>
+
+        <tr>
+            <td colspan="7">
+                <!-- 이전 페이지로 이동 -->
+                <a href="{{continue_url}}" class="float-left btn btn-lg btn-primary">이전으로 돌아가기</a>
+                <!-- 결제창으로 이동 -->
+                <a href="#" class="float-right btn btn-lg btn-info">결제하기</a>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

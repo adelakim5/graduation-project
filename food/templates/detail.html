@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    #cmt-none {
+        cursor: unset;
+    }
+</style>
+
+<!--Bootstrap core CSS-->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!--Page content-->
+<div class="container">
+    <div class="row">
+        <!--Post content column-->
+        <!-- 글쓴이만 보이도록 설정하기 -->
+        <div class="col-lg-8">
+            <a class="btn btn-default" href="{% url 'edit' food.id %}">수정하기</a>
+        <input type="button" onclick="confrm()" value="삭제하기">
+        <form action="{% url 'delete' food.id %}" id="food-delete" method="POST">
+            {% csrf_token %}
+        </form>
+        <script>
+            form = doucment.getElementById('food-delete')
+
+            function confrm() {
+                var result = confirm("정말로 삭제하시겠습니까?")
+                if (result) {
+                    alert('삭제되었습니다.')
+                    form.submit()
+                }
+            }
+        </script>
+        <!--title-->
+        <h1 class="mt-4">{{ food.title }}</h1>
+        <!--date/time-->
+        <p>마지막 게시일: {{ food.pub_date }}</p>
+        <hr>
+        <!--image-->
+        <img class="img-fluid rounded" src="{{ food.image.url }}" alt="photo">
+        <hr>
+        <!--post content-->
+        <blockquote class="blockqute">
+            <p class="lead">{{ food.description }}</p>
+        </blockquote>
+        <hr>
+        <h4> 최소요청금액(1인 기준): {{ food.price }}원 </h4>
+        <p>{{ food.body }}</p>
+        <hr>
+
+        <!--sideBar widgets column-->
+        <div class="col-md-4">
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">다른식당 검색</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="mini-search" name="search_word"
+                            placeholder="Search for...">
+                        <script>
+                            let input = document.getElementById('mini-search')
+                            input.addEventListener('keydown', (e) => {
+                                if (e.keyCode == 13) {
+                                    if (input.value == '') {
+                                        alert('검색어를 입력해주세요.')
+                                    } else {
+                                        location.href = `/search/?searchkeyword=${input.value}`
+                                    }
+                                }
+                            })
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <!--side widget-->
+            <div class="card my-4">
+                <h5 class="card-header">요청 하기</h5>
+                <div class="card-body">
+                    <!-- add to cart -->
+                    <form class="form-inline" action="{% url 'add_food' food_id=food.id %}" method="post">
+                         {% csrf_token %}
+                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                            <option selected>옵션을 선택해주세요.</option>
+                            <option value="1">예약</option>
+                            <option value="2">대기</option>
+                        </select>
+                        <!-- json 파일로 바꿔야할 부분 -->
+                        <div>
+                            <h6>인원: </h6>
+                            <input type="number" min='1' value="1" />
+                            <!-- quantity 추가해야함 -->
+                        </div>
+                        <div>
+                            <h6>가격: </h6>
+                            <p>{{food.price}}원</p>
+                        </div>
+                        <input type="submit" class="btn btn-outline-success float-right" value="요청하기">
+                    </form>
+
+                    <!--button-->
+                    <!-- <button type="submit" class="btn btn-primary my-1">요청하기</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- comment -->
+<form method="POST" class="post-form" action="{% url 'comment' food_id=food.id %}">
+    {% csrf_token %}
+    <button type="submit" class="save btn btn-default">후기남기러가기</button>
+</form>
+<hr>
+{% for comment in food.comments.all %}
+<div class="comment">
+    <div class="date">{{ comment.created_date }}</div>
+    <strong></a> {{ comment.author }}</strong>
+    <p>{{ comment.text|linebreaks }}</p>
+</div>
+{% empty %}
+<p>No comments here yet :(</p>
+{% endfor %}
+
+{% endblock %}

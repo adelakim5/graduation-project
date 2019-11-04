@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3>후기를 남겨주세요.</h3>
+<form method="POST" class="post-form">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" id="review" class="save btn btn-primary" onclick="confrm()">SEND</button>
+</form>
+<script>
+        form = doucment.getElementById('review')
+
+        function confrm() {
+            var result = confirm("후기를 남기시겠습니까?")
+            if (result) {
+                alert('등록되었습니다.')
+                form.submit()
+            }
+        }
+    </script>
+
+{% endblock %} 

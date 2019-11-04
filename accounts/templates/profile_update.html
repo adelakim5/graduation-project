@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+    hr {
+        margin-bottom: 1rem;
+    }
+
+    .custom-control {
+        margin-bottom: 3rem;
+    }
+
+    h4 {
+        font-weight: bold;
+    }
+</style>
+<div id="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h4 class="mb-3">계정 설정</h4>
+                <p>여기서 {{user.username}}님의 정보를 수정할 수 있습니다.</p>
+                <hr>
+                {% if error_msg %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Error</strong> {{error_msg}}
+                </div>
+                {% endif %}
+
+                <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    {{ user_form|crispy }}
+                    {{ profile_form|crispy }}
+                    <input type="submit" value="Update" />
+                </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

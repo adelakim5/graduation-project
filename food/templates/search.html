@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    #searchBar {
+        width: 100%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url('searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+    }
+
+    title {
+        text-decoration: none;
+    }
+
+</style>
+
+<main role="main">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading font-weight-bold">궁동예약</h1>
+            <p class="lead text-center">찾는 식당이 있나요? 바로 검색해보세요.</p>
+            <p class="srch">
+                <input type="text" name="search_word" id="searchBar" placeholder="원하는 식당명을 검색하세요.">
+                <a href="{% url 'search' %}?searchkeyword=한식">한식</a>
+                <a href="{% url 'search' %}?searchkeyword=일식">일식</a>
+                <a href="{% url 'search' %}?searchkeyword=양식">양식</a>
+                <a href="{% url 'search' %}?searchkeyword=닭갈비">닭갈비</a>
+                <a href="{% url 'search' %}?searchkeyword=떡볶이">떡볶이</a>
+                <a href="{% url 'search' %}?searchkeyword=돈까스">돈까스</a>
+                <a href="{% url 'search' %}?searchkeyword=고기">고기구이</a>
+                <script>
+                    let input = document.getElementById('searchBar')
+                    input.addEventListener('keydown', (e) => {
+                        if (e.keyCode == 13) {
+                            if (input.value == '') {
+                                alert('검색어를 입력해주세요.')
+                            } else {
+                                location.href = `/search/?searchkeyword=${input.value}`
+                            }
+                        }
+                    })
+                </script>
+            </p>
+        </div>
+    </section>
+</main>
+
+<div class="container">
+    {% for food in posts %}
+    <section class="row align-items-center my-5">
+        <div class="col-lg-7">
+            {% if food.image %}
+            <a href="{% url 'detail' food.id %}">
+                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ food.image.url }}" alt="photo">
+            </a>
+            {% endif %}
+        </div>
+        <div class="col-lg-5">
+            <h2 class="font-weight-bold">{{ food.title }}</h2>
+            <p>{{ food.description }}</p>
+            <p>{{ food.price }}원</p>
+            <a href="{% url 'detail' food.id  %}" class="btn btn-primary">더보기</a>
+        </div>
+    </section>
+    <hr>
+    {% endfor %}
+</div>
+
+
+<!--<body>
+    {% for post in posts %}
+    <h1>{{ post.title }}</h1>
+    <h3>{{ post.category }}</h3>
+    <h3>{{ post.category2 }}</h3>
+    <img src="{{ post.image.url }}" alt="">
+    {% endfor %}
+</body>
+{% endblock %}-->

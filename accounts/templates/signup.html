@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<!-- {% if error %} -->
+<!-- {{error}} -->
+
+<!-- {% endif%} -->
+
+<form action="{% url 'signup' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="next">
+  {{form|crispy}}
+  <input type="submit" class="btn btn-primary btn-lg btn-block" value="올리기">
+</form>
+
+
+
+<link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/">
+
+<link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  h4 {
+    font-weight: bold;
+  }
+</style>
+
+
+<link href="signin.css" rel="stylesheet">
+
+
+<form class="form-signin" action="{% url 'signup' %}" method="POST">
+  {% csrf_token %}
+  <h1 class="h3 mb-3 font-weight-bold">매장을 등록하고 싶으신가요?</h1>
+  <p>매장을 등록하고 싶은 분들께서는 반드시 회원가입 절차를 밟으셔야 합니다. 회원가입을 하시면 매장 정보와 다양한 소식을 자유롭게 게시할 수 있습니다. 지금 가입을 하셔서 손님들께 보다 빠르고 편하게 소식을
+    공유해보세요.<br>
+    <strong>
+      ※주의사항※: 손님으로 사용하실 분들은 회원가입을 하실 수 없습니다. 손님분들은 카카오 로그인을 통해 이용해주세요.
+    </strong>
+  </p>
+
+  <hr>
+
+  <div class="col">
+    <h4 class="mb-3">회원가입</h4>
+    <form class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="name">이름</label>
+        <input type="text" class="form-control" name="name" placeholder="이름을 입력하세요." required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password">아이디<span class="text-muted"></span></label>
+        <input type="text" class="form-control" name="username" placeholder="아이디를 입력하세요." required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password">비밀번호/Password <span class="text-muted"></span></label>
+        <input type="password" class="form-control" name="password1" placeholder="비밀번호를 입력하세요." required>
+      </div>
+
+      <label for="pwdCfrm">비밀번호 확인/Password Confirm</label>
+      <div class="input-group mb-3">
+        <input type="password" class="form-control" name="password2" aria-label="pwdCfrm"
+          aria-describedby="button-addon2" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email">이메일주소/Email <span class="text-muted">(Optional)</span></label>
+        <input type="email" class="form-control" name="email" placeholder="you@gmail.com">
+      </div>
+
+      <div class="mb-3">
+        <label for="address">매장주소/Restaurant's Address</label>
+        <input type="text" class="form-control" name="address" placeholder="대전광역시 유성구 대학로 99" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="biznumber">사업자등록번호</label>
+        <input type="text" class="form-control" name="bizNumber" placeholder="사업자등록번호 또는 매장번호를 적어주세요." required>
+      </div>
+
+      <hr class="mb-4">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="agreement">
+        <label class="custom-control-label" for="agreement">본인은 위의 회원약관을 모두 읽었으며, 이에 동의합니다.</label>
+      </div>
+
+      <hr class="mb-4">
+      <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+    </form>
+  </div>
+
+</form>
+<script>
+  function validatePassword() {
+    var pd1 = document.getElementById("pd1");
+    var pd2 = document.getElementById("pd2");
+    if (pd1.value != pd2.value) {
+      alert('비밀번호가 다릅니다.');
+      return false;
+    }
+    return true;
+  }
+
+  pd1.onchange = validatePassword;
+  pd2.onkeyup = validatePassword;
+</script>
+-->
+{% endblock %}
