@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'cart.apps.CartConfig',
     'accounts.apps.AccountsConfig',
     'food.apps.FoodConfig',
     'django.contrib.sites',
@@ -42,9 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'django.contrib.humanize',
-    'ckeditor',
-    'ckeditor_uploader',
+    # 'ckeditor',
+    # 'ckeditor_uploader',
     #
     'allauth',
     'allauth.account',
@@ -81,7 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processors.cart',
+                # 'cart.context_processors.cart',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -166,13 +165,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # 디폴트 SITE의 id
 # 등록하지 않으면, 각 요청 시에 host명의 Site 인스턴스를 찾음 
 SITE_ID = 1
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
-CART_ID = 1
+# CART_ID = 1
 
 # django-allauth setting
-LOGIN_REDIRECT_URL = 'tif:home'
-ACCOUNT_LOGOUT_REDIRECT_URL = "tif:home"  # 로그아웃 후 리디렉션 할 페이지
-ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
+LOGIN_REDIRECT_URL = '/'
+# ACCOUNT_LOGOUT_REDIRECT_URL = "tif:home"  # 로그아웃 후 리디렉션 할 페이지
+# ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_IMAGE_BACKEND = "pillow"
+# CKEDITOR_UPLOAD_PATH = 'uploads/'
+# CKEDITOR_IMAGE_BACKEND = "pillow"

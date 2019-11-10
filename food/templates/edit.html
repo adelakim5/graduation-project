@@ -31,7 +31,7 @@
         </div>
         <div class="col-lg-9">
             <!--<div class="col container-fluid">-->
-            <form method="POST" class="table">
+            <form method="POST" class="table" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form|crispy}}
                 <input type="submit" class="btn btn-primary btn-lg btn-block" value="올리기">

@@ -1,110 +1,83 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as auth_login
+# from django.contrib.auth.views import LoginView as auth_login
+# from allauth.socialaccount.models import SocialApp
+# from allauth.socialaccount.templatetags.socialaccount import get_providers
+from food.models import Food
 from django.views import View
-from django.views.generic.edit import CreateView
-from django.views.generic import TemplateView
-from django.views.generic.detail import DetailView
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
-from django.urls import reverse_lazy
-from .forms import SignupForm, UserForm, ProfileForm
-# from .forms import SignupForm, CustomUserChangeForm
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 
-# Create your views here.
+def signup(request):
+    if request.method == 'POST':
+        if request.POST['password1'] == request.POST['password2']:
+            try:
+                user = User.objects.get(username=request.POST['username'])
+                return render(request, 'signup.html', {'error': '이미 사용중인 아이디입니다.'})
+            except User.DoesNotExist:
+                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+                nickname = request.POST['nickname']
+                address = request.POST['address']
+                bizNumber = request.POST['bizNumber']
+                # photo = photo받아오는거 추가해야함
+                profile = Profile(user=user, nickname=nickname, address=address, bizNumber=bizNumber)
+                profile.save()
+                auth.login(request, user)
+                return redirect('food:home')
+    return render(request, 'signup.html')
 
-class ProfileUpdateView(View):
-    def get(self, request):
-        user = get_object_or_404(User, pk=request.user.pk)
-        user_form = UserForm(initial={
-            'username': user.username,
-            'email': user.email,
-        })
+def user_delete(request):
+    try:
+        deleted_user = User.objects.all().filter(username=request.user)
+        deleted_user.delete()
+        return redirect('home')
 
-        if hasattr(user, 'profile'):
-            profile = user.profile
-            profile_form = ProfileForm(initial={
-                'nickname':profile.nickname,
-                'profile_photo': profile.profile_photo,
-                'address':profile.address,
-                'bizNumber':profile.bizNumber,
-            })
-        else:
-            profile_form = ProfileForm()
+    except Exception:
+        return render(request, 'profile.html', {'error':'탈퇴실패'})
+    return render(request, 'home.html')
 
-        return render(request, 'profile_update.html', {'user_form':user_form, 'profile_form':profile_form})
+def profilepage(request):
+    return render(request, 'profile.html')
 
-# 수정(저장)버튼 눌렀을 때 넘겨받은 데이터를 저장하는 post메소드
-    def post(self, request):
-        u = User.objects.get(id=request.user.pk) #로그인 중인 사용자 객체 받아옴
-        user_form = UserForm(request.POST, instance=u) # 기존의 것의 업데이트하는 것 이므로 기존의 인스턴스를 넘겨줘야한다. 기존의 것을 가져와 수정하는 것
+# 내 글 조회 및 관리
+def mypost(request):
+    # food_detail = get_object_or_404(Profile, pk=user_id)
+    mypost = Food.objects
+    mypost_list = Food.objects.all().filter(author=request.user)
+    print(type(mypost_list))
+    return render(request, 'myposts.html', {'mypost_list':mypost_list})
 
-        #User form
-        if user_form.is_valid():
-            user_form.save()
+def user_profile(request):
+    user = User.objects.all().filter(username=request.user)
+    profile = Profile.objects.all().filter(user=request.user)
+    return render(request, 'profile_detail.html', {'profile':profile})
 
-        if hasattr(u, 'profile'):
-            profile = u.profile
-            profile_form = ProfileForm(request.POST, request.FILES, instance=profile) # 기존의 것 가져와 수정
+# def update(request):
+#     user = User.objects.all().filter(username=request.user)
+#     profile = Profile.objects.all().filter(user=request.user)
+#     if request.method == 'POST':
+# #  profile.html에 password확인해서 사용자 맞으면 profile_update.html에 들어갈 수 있게 하기 
+#             first_name = request.POST['first_name']
+#             last_name = request.POST['last_name']
+#             nickname = request.POST['nickname']
+#             address = request.POST['address']
+#             user = User(first_name=first_name, last_name=last_name)
+#             user.save()
+#             profile = Profile(nickname=nickname, address=address)
+#             profile.save()
+#             return redirect('profile')
+#     return render(request, 'profile_update.html', {'profile':profile, 'user':user})
+            
         
-        else:
-            profile_form = ProfileForm(request.POST, request.FILES) #새로 만드는 것
-
-        #profile form
-        if profile_form.is_valid():
-            profile = profile_form.save(commit=False)
-            profile.user = u
-            profile.save()
-
-        return redirect('profile', pk=request.user.pk) #수정된 화면 보여주기
-
-
-class CreateUserView(CreateView):
-    template_name = 'signup.html'
-    form_class = SignupForm
-    success_url = reverse_lazy('signup_done')
-
-class RegisteredView(TemplateView):
-    template_name = 'signup_done.html'
-
-
-# def login(request):
-#     if request.method == 'POST':
-#         login_form = AuthenticationForm(request, request.POST)
-#         if login_form.is_valid():
-#             auth_login(request, login_form.get_user())
-#         return redirect('home')
-#     else:
-#         login_form = AuthenticationForm()
-#     return render(request, 'login.html', {'login_form':login_form})
-
-
-class ProfileView(DetailView):
-    context_object_name = 'profile_user'
-    model = User
-    template_name = 'profile.html'
-
-# def signup(request):
-#     if request.method == 'POST':
-#         if request.POST['password1'] == request.POST['password2']:
-#             try:
-#                 user = User.objects.get(username=request.POST['username'])
-#                 return render(request, 'signup.html', {'error' : '이미 사용중인 아이디 입니다.'})
-#             except User.DoesNotExist:
-#                 user = User.objects.create_user(
-#                     request.POST['username'], 
-#                     password=request.POST['password1'])
-#                 auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-#                 return redirect('home')
-#         else:
-#             return render(request, 'signup.html', {'error': '비밀번호가 다릅니다.'})
-#     else:
-#         return render(request, 'signup.html')
-
-
+        # if form.is_valid():
+        #     new_profile = form.save(commit=False)
+        #     new_profile.save()
+        #     return redirect('profile', profile_id=profile_id)
+        # else :
+        #     form = ProfileForm(instance=user_profile)
+        # return render(request, 'profile_update.html', {'form':form})
 
 def login(request):
     if request.method == 'POST':
@@ -119,22 +92,34 @@ def login(request):
     else:
         return render(request, 'login.html')
 
+# 회원가입과 동시에 로그인 구현 참고: https://github.com/YeongBaeeee/practice/wiki/26-OAuth-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%EA%B3%BC-%EB%8F%99%EC%8B%9C%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8
+# def kakaoLogin(request):
+#     providers = []
+#     for provider in get_providers():
+#         try:
+#             provider.social_app = SocialApp.objects.get(provider=provider.id, sites=settings.SITE_ID)
+#         except SocialApp.DoesNotExist:
+#             provider.social_app - None
+#             providers.append(provider)
+#             return auth_login(request, authentication_form=Profile, template_name='login.html', extra_context={'providers':providers})
+            
+
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
         return redirect('home')
     return render(request, 'login.html')
 
-#def socialLogin(request):
-   # login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
-   # client_id = 'a1b93304238ae08e26b2f453e90b8481'
-   # redirect_uri = 'http://127.0.0.1:8000/accounts/oauth'
-   # login_request_uri += 'client_id=' + client_id
-   # login_request_uri += '&redirect_uri=' + redirect_uri
-   # login_request_uri += '&response_type=code'
-   # request.session['client_id'] = client_id
-   # request.session['redirect_uri'] = redirect_uri
-   # return redirect(login_request_uri)
+def socialLogin(request):
+   login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
+   client_id = 'a1b93304238ae08e26b2f453e90b8481'
+   redirect_uri = 'http://localhost:8000/accounts/oauth'
+   login_request_uri += 'client_id=' + client_id
+   login_request_uri += '&redirect_uri=' + redirect_uri
+   login_request_uri += '&response_type=code'
+   request.session['client_id'] = client_id
+   request.session['redirect_uri'] = redirect_uri
+   return redirect(login_request_uri)
 
 def oauth(request):           
     code = request.GET['code']

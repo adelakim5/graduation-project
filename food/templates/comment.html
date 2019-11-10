@@ -5,6 +5,7 @@
 <h3>후기를 남겨주세요.</h3>
 <form method="POST" class="post-form">
     {% csrf_token %}
+    author: {{ request.user }}
     {{form|crispy}}
     <button type="submit" id="review" class="save btn btn-primary" onclick="confrm()">SEND</button>
 </form>

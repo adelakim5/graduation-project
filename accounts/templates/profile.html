@@ -1,37 +1,21 @@
-{% extends 'base.html' %}
-{% block content %}
+{% if error %}
+<br>
+<br>
+{{ error }}
+<br>
+<br>
+{% endif %}
 
-{% load staticfiles %}
 
-<style>
-    .round{
-        border-radius: 50%;
-    }
-</style>
-<h1>나의 계정</h1>
-<a href="{% url 'profile_update' %}">계정수정하기</a></h2>
-<div class="row">
-    <div class="col-xs-6 col-md-3">
-        {% if profile_user.profile.profile_photo %}
-        <img class="round" src="{{profile_user.profile.profile_photo.url}}" width="200"> <br>
-        {% else %}
-        <img class="round" src="{% static 'images/123.jpg' %}" width="200"> <br>
-        {% endif %}
-    </div>
 
-    <div class="col-xs-6 col-md-3">
-        {% if profile_user.profile.nickname %}
-        <h2>{{profile_user.profile.nickname}}</h2>
-        {% endif %}
-        {% if user == profile_user %}
-        <!-- 로그인한 사용자와 profile_user(프로필 소유자)가 일치할 때만 프로필 편집이 가능하도록 함 -->
-        {% endif %}
-        <h3> username: {{profile_user.username}} <br>
-            {% if profile_user.first_name is not None %}
-            name: {{profile_user.first_name}} {{profile_user.last_name}} <br>
-            {% endif %}
-        </h3>
-    </div>
-</div>
 
-{% endblock %}
+<a href="{% url 'profile_detail' %}">
+    profile확인하기
+</a>
+
+<br>
+{{ user.profile.nickname }}
+<br>
+
+<!-- <a href=" url 'update' ">profile 수정: 개발 예정</a> -->
+<a href="{% url 'user_delete' %}">탈퇴</a>

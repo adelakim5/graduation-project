@@ -1,25 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load crispy_forms_tags %}
+<!-- {% load crispy_forms_tags %} -->
 
-<!-- {% if error %} -->
-<!-- {{error}} -->
-
-<!-- {% endif%} -->
+{% if error %}
+<br>
+{{ error }}
+<br>
+{% endif%}
+<h3>Sign up</h3>
 
 <form action="{% url 'signup' %}" method="POST">
   {% csrf_token %}
-  <input type="hidden" name="next">
-  {{form|crispy}}
-  <input type="submit" class="btn btn-primary btn-lg btn-block" value="올리기">
+  username:
+  <br>
+  <input type="text" name="username" required>
+  <br>
+  nickname:
+  <br>
+  <input type="text" name="nickname" required>
+  <br>
+  password:
+  <br>
+  <input type="password" name="password1" required>
+  <br>
+  password Confirm
+  <input type="password" name="password2" required>
+  <br>
+  first_name
+  <input type="text" name="first_name" required>
+  <br>
+  last_name
+  <br>
+  <input type="text" name="last_name" required>
+  <br>
+  address
+  <br>
+  <input type="text" name="address" id="" required>
+  <br>
+  bizNumber
+  <br>
+  <input type="text" name="bizNumber" id="" required>
+  <br>
+  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Signup">
 </form>
 
-
-
-<link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/">
-
-<link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <!--
 <style>
   .bd-placeholder-img {

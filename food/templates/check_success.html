@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+결제가 완료되었습니다.
+
+<style>
+    /* input{
+        display: none;
+    } */
+</style>
+
+<form action="{% url 'success' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="cart_id" value="{{ requests.pk }}" readonly> <br>
+        매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
+        요청인원: <input type="number" name="people" value="{{ requests.people }}" readonly><br>
+        총금액: <input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원 <br>
+        식당명: <input type="text" name="title" value="{{ requests.title }}" readonly> <br>
+        보낸이: <input type="text" name='sender', value="{{ requests.sender }}" readonly> <br>
+        <button type="submit">확인</button>
+    </form>
+
+<a href="{% url 'home' %}">홈으로 가기</a>
+
+{% endblock %}

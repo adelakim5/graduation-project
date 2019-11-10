@@ -66,14 +66,15 @@
               <form id="logout" method="POST" action="{% url 'logout' %}">{% csrf_token %}<input type="hidden"></form>
               <li class="dropdown">
                 <a href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false" class="text-white dropdown-toggle">마이페이지</a>
+                  aria-expanded="false" class="text-white dropdown-toggle">My Page</a>
                 <!--dropdown추가한 마이페이지-->
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a href="#" class="dropdown-item">예약관리</a>
-                  <a href="#" class="dropdown-item">대기관리</a>
-                  <a href="{% url 'profile' user.pk %}" class="dropdown-item">계정설정</a>
-                  <a href="#" class="dropdown-item">고객관리</a>
-                  <a href="{% url 'new' %}" class="dropdown-item">게시글 관리</a>
+                  <a href="{% url 'myCart' %}" class="dropdown-item">My 내역</a>
+                  <!-- user가 Profile에 있으면 아래를 부르고, 없으면 아래를 안부르게 만들고 싶다.. -->
+                  <a href="{% url 'profile' %}" class="dropdown-item">My 계정</a>
+                  <a href="#" class="dropdown-item">My 고객</a>
+                  <a href="{% url 'new' %}" class="dropdown-item">My 게시글 작성</a>
+                  <!-- <a href=" url 'mypost' " class="dropdown-item">My 게시글 관리</a> -->
                 </div>
               </li>
               <li><a href="#" class="text-white">others</a></li>

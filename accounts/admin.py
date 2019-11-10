@@ -5,12 +5,4 @@ from .models import Profile
 
 # Register your models here.
 
-class Profileline(admin.StackedInline):
-    model = Profile
-    con_delete = False
-
-class CustomUserAdmin(UserAdmin):
-    inlines = (Profileline, )
-
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(Profile)

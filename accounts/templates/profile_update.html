@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load crispy_forms_tags %}
+{% if error %}
+<br>
+{{ error }}
+<br>
+{% endif %}
+
+<form action="{% url 'update' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="first_name" placeholder="{{ user.first_name }}">
+    <input type="text" name="last_name" placeholder="{{ user.last_name }}">
+    <input type="text" name="nickname" placeholder="{{ user.profile.nickname }}">
+    <input type="text" name="address" placeholder="{{ user.profile.address }}">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">수정하기</button>
+
+</form>
+<!-- {% load crispy_forms_tags %}
 
 <style>
     hr {
@@ -20,7 +35,7 @@
         <div class="row">
             <div class="col">
                 <h4 class="mb-3">계정 설정</h4>
-                <p>여기서 {{user.username}}님의 정보를 수정할 수 있습니다.</p>
+                <p>여기서 {{profile.nickname}}님의 정보를 수정할 수 있습니다.</p>
                 <hr>
                 {% if error_msg %}
                 <div class="alert alert-warning alert-dismissible" role="alert">
@@ -30,16 +45,16 @@
                 </div>
                 {% endif %}
 
-                <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                    {{ user_form|crispy }}
-                    {{ profile_form|crispy }}
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form|crispy }}
                     <input type="submit" value="Update" />
                 </form>
                 </p>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 {% endblock %}
