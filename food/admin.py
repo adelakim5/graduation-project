@@ -8,5 +8,5 @@ admin.site.register(Comment)
 admin.site.register(Cart)
 admin.site.register(Cart2)
 admin.site.register(Cart3)
-# admin.site.register(Customer)
+admin.site.register(Customer)
 

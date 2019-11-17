@@ -76,15 +76,16 @@ class Cart3(models.Model):
     title = models.ForeignKey(Food, default=1, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, default='0')
     
-# class Customer(models.Model):
-#     REASON=(
-#         ('no-show', 'no-show'),
-#         ('accept', 'accept'),
-#         ('cancel', 'cancel'),
-#         ('etc', 'etc'),
-#     )
-#     customer = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
-#     whose = models.ForeignKey('accounts.Profile', default=1, on_delete=models.CASCADE)
-#     reason = models.CharField(max_length=100, choices=REASON, default='accept')
-#     others = models.TextField()
-#     how_many = models.PositiveIntegerField(default=1, null=True)
+class Customer(models.Model):
+    REASON=(
+        ('no-show', 'no-show'),
+        ('accept', 'accept'),
+        ('cancel', 'cancel'),
+        ('etc', 'etc'),
+    )
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
+    whose = models.ForeignKey('accounts.Profile', default=1, on_delete=models.CASCADE)
+    reason = models.CharField(max_length=100, choices=REASON, default='accept')
+    others = models.TextField()
+    how_many = models.PositiveIntegerField(default=1, null=True)
+    

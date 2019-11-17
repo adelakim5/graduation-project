@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for one in the_customer %}
+
+{{one.customer}}
+
+{{one.reason}}
+{{one.others}}
+
+{{one.how_many}}
+
+{% endfor %}
+
+{% endblock %}

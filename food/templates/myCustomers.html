@@ -11,7 +11,22 @@
 {% for cus in customers %}
 고객이름:{{ cus.customer }}
 요청건: {{cus.customer.count}}
-사유:{{cus.reason}}
+사유:
+<form action="{%url 'myCustomer'%}" method="POST">
+    {% csrf_token %}
+<!-- 등록을 누르면 사유가 바뀌게  -->
+    <select name="reason" id="reason">
+        <option value="accept">승인</option>
+        <option value="cancel">거절</option>
+        <option value="no-show">노쇼</option>
+        <option value="etc">etc</option>
+    </select>
+    <textarea name="other" id="" cols="30" rows="10">집중고객으로 등록하는 이유를 간단히 적어주세요.</textarea>
+    <input type="submit" name="reg" value="등록">
+</form>
+{{cus.reason}}
 {% endfor %}
+
+<a href="{% url 'manage' %}">집중고객 관리페이지</a>
 
 {% endblock %}

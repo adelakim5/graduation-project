@@ -40,26 +40,40 @@ def requested_cart(request):
     return render(request, 'requested_cart.html', {'request_list':requested_list})
 
 # 매장이 보는 지난 요청 내역
-# def past(request):
-#     me = Profile.objects.get(user=request.user)
-#     past = Cart3.objects.all().filter(receiver=me)
-#     past = past.order_by('-date')
-#     if request.method == 'POST':
-#         customer = User.objects.get(username=request.POST['sender'])
-#         whose = me
-#         reason = 'accept'
-#         other = ''
-#         how_many = 1
-#         custom = Customer(customer=customer, whose=whose, reason=reason, others=other, how_many=how_many)
-#         custom.save()
-#         return redirect('myCustomer')
-#     return render(request, 'past.html', {'past':past})
+def past(request):
+    me = Profile.objects.get(user=request.user)
+    past = Cart3.objects.all().filter(receiver=me)
+    past = past.order_by('-date')
+    if request.method == 'POST':
+        customer = User.objects.get(username=request.POST['sender'])
+        whose = me
+        reason = 'accept'
+        other = ''
+        # how_many = 1
+        # 요청 건수를 어떻게 계산할 수 있을지를 생각해봐야 할 것 같음. 그리고 출력도 왜 자꾸 그따윈지 ㅜㅜ 
+        custom = Customer(customer=customer, whose=whose, reason=reason, others=other)
+        custom.save()
+        return redirect('myCustomer')
+    return render(request, 'past.html', {'past':past})
 
 # # 매장이 보는 나한테 요청한 고객
-# def myCustomers(request):
-#     me = Profile.objects.get(user=request.user)
-#     myCus = Customer.objects.all().filter(whose=me)
-#     return render(request, 'myCustomers.html', {'customers':myCus})
+def myCustomers(request):
+    if request.method == 'POST':
+        me = Profile.objects.get(user=request.user)
+        myCus = Customer.objects.all().filter(whose=me)
+        reason = request.POST['reason']
+        other = request.POST['other']
+        # how_many = myCus.how_many + 1
+        cus = Customer(reason=reason, others=other)
+        cus.save()
+        return redirect('manage')
+    return render(request, 'myCustomers.html', {'customers':myCus})
+
+# 집중고객 페이지
+def manage(request):
+    me = Profile.objects.get(user=request.user)
+    the_customer = Customer.objects.all().filter(whose=me)
+    return render(request, 'manage.html', {'the_customer':the_customer})
     
 # 매장이 보는 게시글관리 
 def post_retrieve(request):

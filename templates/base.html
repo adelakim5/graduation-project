@@ -72,9 +72,9 @@
                   <a href="{% url 'myCart' %}" class="dropdown-item">My 내역</a>
                   <!-- user가 Profile에 있으면 아래를 부르고, 없으면 아래를 안부르게 만들고 싶다.. -->
                   <a href="{% url 'profile' %}" class="dropdown-item">My 계정</a>
-                  <!-- <a href=" url 'myCustomer' " class="dropdown-item">My 고객</a> -->
+                  <a href="{%url 'myCustomer'%}" class="dropdown-item">My 고객</a>
                   <a href="{% url 'new' %}" class="dropdown-item">My 게시글</a>
-                  <!-- <a href=" url 'requested_cart' " class="dropdown-item">My 요청 온 내역</a> -->
+                  <a href="{%url 'requested_cart'%}" class="dropdown-item">My 요청 온 내역</a>
                 </div>
               </li>
               <li><a href="#" class="text-white">others</a></li>
