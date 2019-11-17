@@ -2,30 +2,32 @@
 {% block content %}
 <!-- {% load crispy_forms_tags %} -->
 
-{% if error %}
-<br>
-{{ error }}
-<br>
-{% endif%}
+<div class="message" role="alert">
+  {% if error %}
+  <br>
+  {{ error }}
+  <br>
+  {% endif%}
+</div>
 
 <div class="container">
   <h1>매장을 등록하고 싶으신가요?</h1>
   <p>궁동예약에 등록하는 절차는 그리 어렵지 않습니다. 고객분들께 보다 빠르고 편하게 서비스를 제공하고, 보다 쉽게 궁동예약이 주는 편리함을 누려보세요.<br>
-    <strong>※주의사항: 고객분들은 가입할 수 없습니다. 고객으로 사용하고 싶은 분들은 카카오톡 로그인을 이용해주세요.※</strong></p>
+    <strong>※주의사항: 손님으로 사용하고싶은 고객분들은 가입할 수 없습니다. 카카오톡 로그인을 통해 이용해주세요.※</strong></p>
   <hr>
   <form action="{% url 'signup' %}" method="POST">
 
     {% csrf_token %}
-    <label for="username"><b>아이디</b></label>
+    <label for="username"><b>아이디*</b></label>
     <input type="text" name="username" required>
 
-    <label for="nickname"><b>닉네임</b></label>
+    <label for="nickname"><b>닉네임*</b></label>
     <input type="text" placeholder="어떤 식당인지 잘 느껴지도록 작명하는것을 추천합니다." name="nickname" required>
 
-    <label for="password1"><b>비밀번호</b></label>
+    <label for="password1"><b>비밀번호*</b></label>
     <input type="password" placeholder="Enter Password" name="password1" required>
 
-    <label for="password2"><b>비밀번호 확인</b></label>
+    <label for="password2"><b>비밀번호 확인*</b></label>
     <input type="password" placeholder="Repeat Password" name="password2" required>
 
     <label for="first_name"><b>이름</b></label>
@@ -34,12 +36,14 @@
     <label for="last_name"><b>성</b></label>
     <input type="text" name="last_name" >
 
-    <label for="address"><b>주소</b></label>
+    <label for="address"><b>주소*</b></label>
     <input type="text" name="address" required>
 
-    <label for="bizNumber"><b>사업자등록번호</b></label>
+    <label for="bizNumber"><b>사업자등록번호*</b></label>
     <input type="text" placeholder="정확히 기입해 주세요." name="bizNumber" required>
 
+    <p>*는 필수항목입니다.</p>
+    <hr>
     <div class="clearfix">
       <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기">
     </div>
@@ -71,6 +75,11 @@
 
   input[type=submit]:hover {
     opacity: 1;
+  }
+  .message{
+    text-align: center;
+    color: red;
+    margin-bottom: 50px;
   }
 </style>
 

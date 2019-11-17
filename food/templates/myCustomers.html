@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if error %}
+<br>
+{{ error }}
+<br>
+{% endif %}
+
+
+{% for cus in customers %}
+고객이름:{{ cus.customer }}
+요청건: {{cus.customer.count}}
+사유:{{cus.reason}}
+{% endfor %}
+
+{% endblock %}

@@ -1,32 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
 
-요청내역
-<div class="container">
-    {% for requests in request_list %}
-    <section class="row align-items-center my-5">
-        <div class="col-lg-5">
-            <input type="text" name="cart2_id" value="{{ requests.pk }}" readonly> <br>
-            매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
-            요청인원: <input type="number" name="people" value="{{ requests.people }}" readonly><br>
-            총금액: <input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원 <br>
-            식당명: <input type="text" name="title" value="{{ requests.title }}" readonly> <br>
-            보낸이: <input type="text" name='sender', value="{{ requests.sender }}" readonly> <br>
-            결제: {{requests.status}}
-            <form action="{% url 'checkCanceled' requests.order_id %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" name="deny" id="" value="거절"><br>
-            </form>
-            <!-- <form action=" url 'reservation' requests.order_id " method="POST">
-                {% csrf_token %}
-                <input type="submit" name="ok" id="" value="승인"><br>
-            </form> -->
-           
-        </div>
-    </section>
-    <hr>
-    {% endfor %}
+<!-- 요청내역 -->
+<!-- 매장에서 요청 온 내역을 보는 곳 -->
 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <h4>현재 요청 내역</h4>
+            <div class="list-group">
+                <a href="{% url 'requested_cart' %}" class="list-group-item">현재 요청 내역</a>
+                <a href="{% url 'past' %}" class="list-group-item">지난 요청 내역</a>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <section class="row align-items-center my-5">
+                {% for requests in request_list %}
+                <input type="text" name="cart2_id" value="{{ requests.pk }}" readonly> <br>
+                매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
+                요청인원: <input type="number" name="people" value="{{ requests.people }}" readonly><br>
+                총금액: <input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원 <br>
+                식당명: <input type="text" name="title" value="{{ requests.title }}" readonly> <br>
+                보낸이: <input type="text" name='sender' , value="{{ requests.sender }}" readonly> <br>
+                결제: {{requests.status}}
+                <form action="{% url 'checkCanceled' requests.order_id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" name="ok" id="" value="승인"><br>
+                    <input type="submit" name="deny" id="" value="거절"><br>
+                </form>
+            </section>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+<style>
+    .list-group {
+        margin-top: 1rem;
+    }
+</style>
+
 
 {% endblock %}

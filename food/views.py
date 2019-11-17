@@ -39,6 +39,28 @@ def requested_cart(request):
     requested_list = Cart2.objects.all().filter(receiver=the_receiver)
     return render(request, 'requested_cart.html', {'request_list':requested_list})
 
+# 매장이 보는 지난 요청 내역
+# def past(request):
+#     me = Profile.objects.get(user=request.user)
+#     past = Cart3.objects.all().filter(receiver=me)
+#     past = past.order_by('-date')
+#     if request.method == 'POST':
+#         customer = User.objects.get(username=request.POST['sender'])
+#         whose = me
+#         reason = 'accept'
+#         other = ''
+#         how_many = 1
+#         custom = Customer(customer=customer, whose=whose, reason=reason, others=other, how_many=how_many)
+#         custom.save()
+#         return redirect('myCustomer')
+#     return render(request, 'past.html', {'past':past})
+
+# # 매장이 보는 나한테 요청한 고객
+# def myCustomers(request):
+#     me = Profile.objects.get(user=request.user)
+#     myCus = Customer.objects.all().filter(whose=me)
+#     return render(request, 'myCustomers.html', {'customers':myCus})
+    
 # 매장이 보는 게시글관리 
 def post_retrieve(request):
     the_author = Profile.objects.get(user=request.user)
@@ -221,6 +243,7 @@ def checkCanceled(request, cart2_id):
     cart2 = get_object_or_404(Cart2, order_id=cart2_id)
     access_token = SocialToken.objects.get(account__user=cart2.sender, account__provider="kakao").token
     if request.method == 'POST':
+        # 거절을 누른 경우
         if request.POST['deny']:
             cart2.status == "-1"
             headers = {
@@ -238,8 +261,19 @@ def checkCanceled(request, cart2_id):
             URL = 'https://kapi.kakao.com/v1/payment/cancel'
             res = requests.post(URL,headers=headers,data=data)
             cart2.save()
+            sender = cart2.sender
+            receiver = cart2.receiver
+            order_id = cart2.order_id
+            people = cart2.people
+            total_price = cart2.total_price
+            date = timezone.now()
+            title = cart2.title
+            status = '-1'
+            cart3 = Cart3(sender=sender, receiver=receiver, order_id=order_id, people=people, total_price=total_price, date=date, title=title, status=status)
+            cart3.save()
             cart_of_sender = Cart.objects.all().filter(id=cart2_id)
             cart_of_sender.delete()
+            cart2.delete()
             return redirect('fail')
 
 # def reservation(request, cart2_id):
@@ -293,5 +327,3 @@ def checkCanceled(request, cart2_id):
 # 
 def fail(request):
     return render(request, 'check_fail.html')
-
-

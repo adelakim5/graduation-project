@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <!--<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">-->
   <meta name="generator" content="Jekyll v3.8.5">
-
+  <!-- font -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -26,8 +26,25 @@
   <!-- Bootstrap core CSS -->
   <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css" type="text/css">
-  
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    footer {
+      margin-top: 5rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -55,9 +72,9 @@
                   <a href="{% url 'myCart' %}" class="dropdown-item">My 내역</a>
                   <!-- user가 Profile에 있으면 아래를 부르고, 없으면 아래를 안부르게 만들고 싶다.. -->
                   <a href="{% url 'profile' %}" class="dropdown-item">My 계정</a>
-                  <a href="#" class="dropdown-item">My 고객</a>
+                  <!-- <a href=" url 'myCustomer' " class="dropdown-item">My 고객</a> -->
                   <a href="{% url 'new' %}" class="dropdown-item">My 게시글</a>
-                  <!-- <a href=" url 'mypost' " class="dropdown-item">My 게시글 관리</a> -->
+                  <!-- <a href=" url 'requested_cart' " class="dropdown-item">My 요청 온 내역</a> -->
                 </div>
               </li>
               <li><a href="#" class="text-white">others</a></li>

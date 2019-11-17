@@ -5,96 +5,102 @@
 
 {% block content %}
 
+<style>
+  .message {
+    text-align: center;
+    color: red;
+    margin-bottom: 50px;
+  }
+
+  #kakao-login-btn {
+    background-color: #fee100;
+  }
+
+  .bg-img {
+    background-image: url('https://cdn.pixabay.com/photo/2019/03/14/22/06/seat-4056023_960_720.jpg');
+    min-height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  .container-form {
+    position: absolute;
+    right: 0;
+    margin: 40px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: white;
+  }
+
+  input[type=text],
+  input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  input[type=text]:focus,
+  input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  .btn {
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+  #btn-1 {
+    background-color: #4e9a9a;
+  }
+
+  #kakao-btn {
+    background-color: #fee100;
+  }
+
+  #btn-reg {
+    background-color: black;
+  }
+
+  p{
+    text-align: center;
+  }
+</style>
+
 {% if error %}
-{{ error }}
 <br>
-<br>
+<div role="alert" class="message">
+  {{error}}
+</div>
 {% endif %}
-<link rel="stylesheet" href="./style.css">
 
-<div class="container-login">
-  <form action="{% url 'login' %}" method="POST">
+
+<div class="bg-img">
+  <form action="{% url 'login' %}" method="POST" class="container-form">
     {% csrf_token %}
-    <div class="row-login">
-      <div class="ex">
-        <h2>로그인 후 사용 가능합니다.</h2>
-        <p>고객으로 사용하실 분들은 카카오로그인을 이용해주세요. 매장으로 사용하실 분들은 일반 로그인을 이용해주세요.</p>
-      </div>
-
-
-      <div class="col-login">
-        <a class="sb" id="kakao-login-btn" href="{% provider_login_url 'kakao' %}">
-          카카오로 로그인하기
-        </a>
-      </div>
-
-      <div class="col-login">
-        <div class="hide-md-lg">
-          <p>매장 로그인:</p>
-        </div>
-
-        <input class="id" type="text" name="username" placeholder="아이디" required>
-        <input class="pw" type="password" name="password" placeholder="비밀번호" required>
-        <input class="done" type="submit" value="확인">
-      </div>
-
-    </div>
+    <h2>Login</h2>
+   
+    <input class="id" type="text" name="username" placeholder="아이디를 입력하세요" required>
+   
+    <input type="password" name="password" placeholder="비밀번호를 입력하세요" required>
+    <input class="btn" id="btn-1" type="submit" value="매장계정으로 로그인">
+    <hr>
+    <p><strong>일반 고객이시라면</strong></p>
+    <a class="btn" id="kakao-btn" href="{% provider_login_url 'kakao' %}">
+      카카오로 로그인
+    </a>
   </form>
 </div>
-
 <div class="bottom-container">
-  <a href="{% url 'signup' %}" style="color:white" class="btn">매장을 등록하고 싶으신가요?</a>
+  <a href="{% url 'signup' %}" style="color:white" class="btn" id="btn-reg">매장을 등록하고 싶으신가요?</a>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-<!-- <form class="form-signin" action=" url 'login' " method="POST">
-    {% csrf_token %}
-    <h1 class="h3 mb-3 font-weight-normal">매장용</h1>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-      매장용 로그인 -->
-<!-- </button> -->
-<!-- The Modal -->
-<!-- <div class="modal fade" id="myModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content"> -->
-
-<!-- Modal Header -->
-<!-- <div class="modal-header">
-            <h4 class="modal-title">매장용 로그인</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-
-          <div class="modal-body">
-            <label for="username" class="sr-only">ID</label>
-            <input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
-            <div class="checkbox mb-2"> -->
-<!-- <label>
-                <input type="checkbox" value="remember-me"> Remember me
-              </label> -->
-<!-- </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-          </div> -->
-
-<!-- Modal footer -->
-<!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-  </form>
-</div> -->
 {% endblock %}

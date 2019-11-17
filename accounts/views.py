@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.models import User
 # from django.contrib.contenttypes.models import ContentType
 # from django.contrib.auth.views import LoginView as auth_login

@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     #provider
     'allauth.socialaccount.providers.kakao',
 ]
-
+ASGI_APPLICATION = 'reservation-site.routing.application'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
@@ -85,6 +85,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'reservation.wsgi.application'
 
@@ -171,8 +172,3 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # django-allauth setting
 LOGIN_REDIRECT_URL = '/'
-# ACCOUNT_LOGOUT_REDIRECT_URL = "tif:home"  # 로그아웃 후 리디렉션 할 페이지
-# ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
-
-# CKEDITOR_UPLOAD_PATH = 'uploads/'
-# CKEDITOR_IMAGE_BACKEND = "pillow"

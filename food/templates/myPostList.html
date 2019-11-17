@@ -1,31 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-    .list-group {
-        margin-top: 1rem;
-    }
 
-    .table {
-        max-width: 100%;
-        padding-left: 1rem;
-        font-weight: bold;
-    }
-
-    h4 {
-        margin-bottom: 2rem;
-        font-weight: bold;
-    }
-
-    .col-lg-9,
-    .btn {
-        margin-top: 1rem;
-    }
-
-    .private{
-        float: rigtht;
-    }
-</style>
 <!--new.html content -->
 <div class="container">
     <div class="row">
@@ -51,28 +27,49 @@
                     <p>{{ post.description }}<br>(후기: {{post.approved_comments.count}}개)</p>
                     <p>{{ post.price }}원</p>
                     <a href="{% url 'detail' post.id  %}" class="btn btn-primary">더보기</a>
-                    <div class="private">
-                        <a class="btn btn-default" href="{% url 'edit' post.id %}">수정</a>
-                        <form action="{% url 'delete' post.id %}" id="food-delete" method="POST">
-                            {% csrf_token %}
-                            <input type="submit" class="btn btn-default" onclick="confrm()" value="삭제">
-                        </form>
-                        <script>
-                            form = doucment.getElementById('food-delete')
+                    <a class="btn btn-primary" href="{% url 'edit' post.id %}">수정</a>
+                    <form action="{% url 'delete' post.id %}" id="food-delete" method="POST" style="float: right;">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-default" onclick="confrm()" value="삭제">
+                    </form>
+                    <script>
+                        form = doucment.getElementById('food-delete')
 
-                            function confrm() {
-                                var result = confirm("정말로 삭제하시겠습니까?")
-                                if (result) {
-                                    alert('삭제되었습니다.')
-                                    form.submit()
-                                }
+                        function confrm() {
+                            var result = confirm("정말로 삭제하시겠습니까?")
+                            if (result) {
+                                alert('삭제되었습니다.')
+                                form.submit()
                             }
-                        </script>
+                        }
+                    </script>
 
-                    </div>
                 </div>
             </section>
             <hr>
             {% endfor %}
         </div>
-        {% endblock %}
+    </div>
+</div>
+<style>
+    .list-group {
+        margin-top: 1rem;
+    }
+
+    .table {
+        max-width: 100%;
+        padding-left: 1rem;
+        font-weight: bold;
+    }
+
+    h4 {
+        margin-bottom: 2rem;
+        font-weight: bold;
+    }
+
+    .col-lg-9,
+    .btn {
+        margin-top: 1rem;
+    }
+</style>
+{% endblock %}
