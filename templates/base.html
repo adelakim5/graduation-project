@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
- <!--<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">-->
+  <!--<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">-->
   <meta name="generator" content="Jekyll v3.8.5">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -26,26 +26,8 @@
   <!-- Bootstrap core CSS -->
   <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    footer {
-      margin-top: 5rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" type="text/css">
+  
 </head>
 
 <body>
@@ -60,10 +42,11 @@
           </div>
           <div class="col-sm-4 offset-md-1 py-4">
             <h4 class="text-white">궁동예약!</h4>
+            {% if user.is_authenticated %}
             <ul class="list-unstyled">
-              {% if user.is_authenticated %}
               <li><a href="javascript:{document.getElementById('logout').submit()}" class="text-white">로그아웃</a></li>
               <form id="logout" method="POST" action="{% url 'logout' %}">{% csrf_token %}<input type="hidden"></form>
+              <!--dropdown추가한 마이페이지-->
               <li class="dropdown">
                 <a href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false" class="text-white dropdown-toggle">My Page</a>
@@ -73,18 +56,21 @@
                   <!-- user가 Profile에 있으면 아래를 부르고, 없으면 아래를 안부르게 만들고 싶다.. -->
                   <a href="{% url 'profile' %}" class="dropdown-item">My 계정</a>
                   <a href="#" class="dropdown-item">My 고객</a>
-                  <a href="{% url 'new' %}" class="dropdown-item">My 게시글 작성</a>
+                  <a href="{% url 'new' %}" class="dropdown-item">My 게시글</a>
                   <!-- <a href=" url 'mypost' " class="dropdown-item">My 게시글 관리</a> -->
                 </div>
               </li>
               <li><a href="#" class="text-white">others</a></li>
-              {% else %}
+            </ul>
+            {% else %}
+            <ul class="list-unstyled">
               <li><a href="{% url 'login' %}">로그인</a></li>
               <li>
                 <a href="{% url 'signup' %}">매장을 등록하고 싶으신가요?</a>
               </li>
               <li><a href="#">others</a></li>
-              {% endif %}
+            </ul>
+            {% endif %}
             </ul>
           </div>
         </div>

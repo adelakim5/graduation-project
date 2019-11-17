@@ -7,148 +7,71 @@
 {{ error }}
 <br>
 {% endif%}
-<h3>Sign up</h3>
 
-<form action="{% url 'signup' %}" method="POST">
-  {% csrf_token %}
-  username:
-  <br>
-  <input type="text" name="username" required>
-  <br>
-  nickname:
-  <br>
-  <input type="text" name="nickname" required>
-  <br>
-  password:
-  <br>
-  <input type="password" name="password1" required>
-  <br>
-  password Confirm
-  <input type="password" name="password2" required>
-  <br>
-  first_name
-  <input type="text" name="first_name" required>
-  <br>
-  last_name
-  <br>
-  <input type="text" name="last_name" required>
-  <br>
-  address
-  <br>
-  <input type="text" name="address" id="" required>
-  <br>
-  bizNumber
-  <br>
-  <input type="text" name="bizNumber" id="" required>
-  <br>
-  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Signup">
-</form>
+<div class="container">
+  <h1>매장을 등록하고 싶으신가요?</h1>
+  <p>궁동예약에 등록하는 절차는 그리 어렵지 않습니다. 고객분들께 보다 빠르고 편하게 서비스를 제공하고, 보다 쉽게 궁동예약이 주는 편리함을 누려보세요.<br>
+    <strong>※주의사항: 고객분들은 가입할 수 없습니다. 고객으로 사용하고 싶은 분들은 카카오톡 로그인을 이용해주세요.※</strong></p>
+  <hr>
+  <form action="{% url 'signup' %}" method="POST">
 
-<!--
+    {% csrf_token %}
+    <label for="username"><b>아이디</b></label>
+    <input type="text" name="username" required>
+
+    <label for="nickname"><b>닉네임</b></label>
+    <input type="text" placeholder="어떤 식당인지 잘 느껴지도록 작명하는것을 추천합니다." name="nickname" required>
+
+    <label for="password1"><b>비밀번호</b></label>
+    <input type="password" placeholder="Enter Password" name="password1" required>
+
+    <label for="password2"><b>비밀번호 확인</b></label>
+    <input type="password" placeholder="Repeat Password" name="password2" required>
+
+    <label for="first_name"><b>이름</b></label>
+    <input type="text" name="first_name" >
+
+    <label for="last_name"><b>성</b></label>
+    <input type="text" name="last_name" >
+
+    <label for="address"><b>주소</b></label>
+    <input type="text" name="address" required>
+
+    <label for="bizNumber"><b>사업자등록번호</b></label>
+    <input type="text" placeholder="정확히 기입해 주세요." name="bizNumber" required>
+
+    <div class="clearfix">
+      <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기">
+    </div>
+  </form>
+</div>
+
+
 <style>
-  .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  input[type=text],
+  input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
   }
 
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
+  input[type=text]:focus,
+  input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
   }
 
-  h4 {
-    font-weight: bold;
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  input[type=submit]:hover {
+    opacity: 1;
   }
 </style>
 
-
-<link href="signin.css" rel="stylesheet">
-
-
-<form class="form-signin" action="{% url 'signup' %}" method="POST">
-  {% csrf_token %}
-  <h1 class="h3 mb-3 font-weight-bold">매장을 등록하고 싶으신가요?</h1>
-  <p>매장을 등록하고 싶은 분들께서는 반드시 회원가입 절차를 밟으셔야 합니다. 회원가입을 하시면 매장 정보와 다양한 소식을 자유롭게 게시할 수 있습니다. 지금 가입을 하셔서 손님들께 보다 빠르고 편하게 소식을
-    공유해보세요.<br>
-    <strong>
-      ※주의사항※: 손님으로 사용하실 분들은 회원가입을 하실 수 없습니다. 손님분들은 카카오 로그인을 통해 이용해주세요.
-    </strong>
-  </p>
-
-  <hr>
-
-  <div class="col">
-    <h4 class="mb-3">회원가입</h4>
-    <form class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="name">이름</label>
-        <input type="text" class="form-control" name="name" placeholder="이름을 입력하세요." required>
-      </div>
-
-      <div class="mb-3">
-        <label for="password">아이디<span class="text-muted"></span></label>
-        <input type="text" class="form-control" name="username" placeholder="아이디를 입력하세요." required>
-      </div>
-
-      <div class="mb-3">
-        <label for="password">비밀번호/Password <span class="text-muted"></span></label>
-        <input type="password" class="form-control" name="password1" placeholder="비밀번호를 입력하세요." required>
-      </div>
-
-      <label for="pwdCfrm">비밀번호 확인/Password Confirm</label>
-      <div class="input-group mb-3">
-        <input type="password" class="form-control" name="password2" aria-label="pwdCfrm"
-          aria-describedby="button-addon2" required>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="button-addon2">확인</button>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="email">이메일주소/Email <span class="text-muted">(Optional)</span></label>
-        <input type="email" class="form-control" name="email" placeholder="you@gmail.com">
-      </div>
-
-      <div class="mb-3">
-        <label for="address">매장주소/Restaurant's Address</label>
-        <input type="text" class="form-control" name="address" placeholder="대전광역시 유성구 대학로 99" required>
-      </div>
-
-      <div class="mb-3">
-        <label for="biznumber">사업자등록번호</label>
-        <input type="text" class="form-control" name="bizNumber" placeholder="사업자등록번호 또는 매장번호를 적어주세요." required>
-      </div>
-
-      <hr class="mb-4">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="agreement">
-        <label class="custom-control-label" for="agreement">본인은 위의 회원약관을 모두 읽었으며, 이에 동의합니다.</label>
-      </div>
-
-      <hr class="mb-4">
-      <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
-    </form>
-  </div>
-
-</form>
-<script>
-  function validatePassword() {
-    var pd1 = document.getElementById("pd1");
-    var pd2 = document.getElementById("pd2");
-    if (pd1.value != pd2.value) {
-      alert('비밀번호가 다릅니다.');
-      return false;
-    }
-    return true;
-  }
-
-  pd1.onchange = validatePassword;
-  pd2.onkeyup = validatePassword;
-</script>
--->
 {% endblock %}

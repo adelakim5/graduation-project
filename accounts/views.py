@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
+# from django.contrib.contenttypes.models import ContentType
 # from django.contrib.auth.views import LoginView as auth_login
 # from allauth.socialaccount.models import SocialApp
 # from allauth.socialaccount.templatetags.socialaccount import get_providers
@@ -25,7 +26,7 @@ def signup(request):
                 profile = Profile(user=user, nickname=nickname, address=address, bizNumber=bizNumber)
                 profile.save()
                 auth.login(request, user)
-                return redirect('food:home')
+                return redirect('home')
     return render(request, 'signup.html')
 
 def user_delete(request):
@@ -40,14 +41,6 @@ def user_delete(request):
 
 def profilepage(request):
     return render(request, 'profile.html')
-
-# 내 글 조회 및 관리
-def mypost(request):
-    # food_detail = get_object_or_404(Profile, pk=user_id)
-    mypost = Food.objects
-    mypost_list = Food.objects.all().filter(author=request.user)
-    print(type(mypost_list))
-    return render(request, 'myposts.html', {'mypost_list':mypost_list})
 
 def user_profile(request):
     user = User.objects.all().filter(username=request.user)
@@ -90,19 +83,7 @@ def login(request):
         else:
             return render(request, 'login.html', {'error' : '아이디 또는 비밀번호가 다릅니다.'})
     else:
-        return render(request, 'login.html')
-
-# 회원가입과 동시에 로그인 구현 참고: https://github.com/YeongBaeeee/practice/wiki/26-OAuth-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%EA%B3%BC-%EB%8F%99%EC%8B%9C%EC%97%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8
-# def kakaoLogin(request):
-#     providers = []
-#     for provider in get_providers():
-#         try:
-#             provider.social_app = SocialApp.objects.get(provider=provider.id, sites=settings.SITE_ID)
-#         except SocialApp.DoesNotExist:
-#             provider.social_app - None
-#             providers.append(provider)
-#             return auth_login(request, authentication_form=Profile, template_name='login.html', extra_context={'providers':providers})
-            
+        return render(request, 'login.html')           
 
 def logout(request):
     if request.method == 'POST':

@@ -10,41 +10,65 @@
 <br>
 <br>
 {% endif %}
-<div class="text-center">
-  <h1 class="h3 mb-3 font-weight-normal">고객용</h1>
-  <a id="kakao-login-btn" href="{% provider_login_url 'kakao' %}">
-    <img
-      src="https://developers.kakao.com/assets/img/about/logos/kakaologin/kr/kakao_account_login_btn_medium_narrow.png"
-      alt="카카오로그인">
-  </a>
-  <hr>
-  <a href="{% provider_login_url 'kakao' %}">kakaologin</a>
-  <!-- <h1>social login</h1>
-  <ul>
-    {% for provider in providers %}
-    <li>
-      {% if provider.social_app %}
-      <a href="{% provider_login_url provider.id %}">{{ provider.name }}</a>
-      {% else %}
-      <a href="">provider {{ provider.name }} 설정 필요</a>
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-  <hr> -->
-  <form class="form-signin" action="{% url 'login' %}" method="POST">
+<link rel="stylesheet" href="./style.css">
+
+<div class="container-login">
+  <form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <div class="row-login">
+      <div class="ex">
+        <h2>로그인 후 사용 가능합니다.</h2>
+        <p>고객으로 사용하실 분들은 카카오로그인을 이용해주세요. 매장으로 사용하실 분들은 일반 로그인을 이용해주세요.</p>
+      </div>
+
+
+      <div class="col-login">
+        <a class="sb" id="kakao-login-btn" href="{% provider_login_url 'kakao' %}">
+          카카오로 로그인하기
+        </a>
+      </div>
+
+      <div class="col-login">
+        <div class="hide-md-lg">
+          <p>매장 로그인:</p>
+        </div>
+
+        <input class="id" type="text" name="username" placeholder="아이디" required>
+        <input class="pw" type="password" name="password" placeholder="비밀번호" required>
+        <input class="done" type="submit" value="확인">
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<div class="bottom-container">
+  <a href="{% url 'signup' %}" style="color:white" class="btn">매장을 등록하고 싶으신가요?</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <form class="form-signin" action=" url 'login' " method="POST">
     {% csrf_token %}
     <h1 class="h3 mb-3 font-weight-normal">매장용</h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-      매장용 로그인
-    </button>
-    <!-- The Modal -->
-    <div class="modal fade" id="myModal">
+      매장용 로그인 -->
+<!-- </button> -->
+<!-- The Modal -->
+<!-- <div class="modal fade" id="myModal">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content"> -->
 
-          <!-- Modal Header -->
-          <div class="modal-header">
+<!-- Modal Header -->
+<!-- <div class="modal-header">
             <h4 class="modal-title">매장용 로그인</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
@@ -54,35 +78,23 @@
             <input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
             <label for="password" class="sr-only">Password</label>
             <input type="password" name="password" class="form-control" placeholder="Password" required>
-            <div class="checkbox mb-2">
-              <!-- <label>
+            <div class="checkbox mb-2"> -->
+<!-- <label>
                 <input type="checkbox" value="remember-me"> Remember me
               </label> -->
-            </div>
+<!-- </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-          </div>
+          </div> -->
 
-          <!-- Modal footer -->
-          <div class="modal-footer">
+<!-- Modal footer -->
+<!-- <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
 
         </div>
       </div>
     </div>
-    <!--
-        <label for="username" class="sr-only">ID</label>
-        <input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-      -->
 
   </form>
-</div>
+</div> -->
 {% endblock %}

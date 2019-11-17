@@ -17,22 +17,7 @@
         <!--Post content column-->
         <!-- 글쓴이만 보이도록 설정하기 -->
         <div class="col-lg-8">
-            <a class="btn btn-default" href="{% url 'edit' food.id %}">수정하기</a>
-            <input type="button" onclick="confrm()" value="삭제하기">
-            <form action="{% url 'delete' food.id %}" id="food-delete" method="POST">
-                {% csrf_token %}
-            </form>
-            <script>
-                form = doucment.getElementById('food-delete')
 
-                function confrm() {
-                    var result = confirm("정말로 삭제하시겠습니까?")
-                    if (result) {
-                        alert('삭제되었습니다.')
-                        form.submit()
-                    }
-                }
-            </script>
             <!--title-->
             <h1 class="mt-4">{{ food.title }}</h1>
             <!--date/time, author-->

@@ -26,13 +26,3 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('text', )
 
-# class CartForm(forms.ModelForm):
-   
-#     class Meta:
-#         model = Cart
-#         fields = ('people', )
-
-
-    # class Meta:
-    #     model = Food
-    #     fields = ('title', 'price', 'people', 'choice_field', )

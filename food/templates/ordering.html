@@ -1,0 +1,12 @@
+결제요청내역
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="number" name="cart_id" value="{{ cart.pk }}" readonly> <br>
+    <input type="text" name="receiver" value="{{ cart.receiver }}" readonly><br>
+    <input type="number" name="people" value="{{ cart.people }}" readonly><br>
+    <input type="number" name="total_price" value="{{ cart.total_price }}" readonly> <br>
+    <input type="text" name="title" value="{{ cart.title }}" readonly> <br>
+    <input type="text" name='sender' , value="{{ cart.sender }}" readonly> <br>
+    <button type="submit">ordering completed</button>
+</form>

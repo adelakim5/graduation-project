@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 {% if error %}
 <br>
 <br>
@@ -6,16 +9,45 @@
 <br>
 {% endif %}
 
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
 
+    .title {
+        color: grey;
+        margin-top: 8px;
+    }
 
+    .btn {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        font-size: 18px;
+    }
 
-<a href="{% url 'profile_detail' %}">
-    profile확인하기
-</a>
+    .btn:hover,
+    a:hover {
+        opacity: 0.7;
+    }
+</style>
+<h2 style="text-align: center">My Profile</h2>
+<div class="card">
+    <img src="https://cdn.pixabay.com/photo/2017/01/31/09/30/raspberry-2023404_960_720.jpg" alt="plain_photo"
+        style="width: 100%">
+    <h1 class="title">{{ user.profile.nickname}}</h1>
+    <p>궁동예약 입점 완료</p>
 
-<br>
-{{ user.profile.nickname }}
-<br>
+    <p><a href="{% url 'profile_detail' %}" class="btn btn-primary">자세히보기</a></p>
 
-<!-- <a href=" url 'update' ">profile 수정: 개발 예정</a> -->
-<a href="{% url 'user_delete' %}">탈퇴</a>
+</div>
+
+{% endblock %}

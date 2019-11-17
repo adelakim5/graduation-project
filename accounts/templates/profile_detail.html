@@ -3,52 +3,77 @@
 
 {% load staticfiles %}
 
-profile.html
-
 <style>
     .round {
         border-radius: 50%;
     }
 </style>
-<h1>나의 계정</h1>
-{{ user.profile.user }}
-{{ user.profile.nickname }}
-{{ user.profile.address }}
-{{ user.profile.bizNumber }}
-<form action="(% url 'user_delete' %)" id="delete">
-    {% csrf_token %}
-    <input type="button" onclick="confrm()" value="탈퇴하기">
-    <script>
-        form = document.getElementById('delete')
 
-        function confrm() {
-            var resuly = confirm("정말로 탈퇴하시겠습니까?")
-            if (result) {
-                alert("탈퇴가 완료되었습니다.")
-                form.submit()
+<h2>
+    {{ user.profile.user }}님의 개인정보
+
+</h2>
+<hr>
+
+<div class="profile-form">
+    <!-- 폼 -->
+
+    <label for="nickname"><b>닉네임</b></label>
+    <input type="text" placeholder="{{user.profile.nickname}}" name="nickname" readonly>
+
+    <label for="first_name"><b>이름</b></label>
+    <input type="text" name="first_name" readonly>
+
+    <label for="last_name"><b>성</b></label>
+    <input type="text" name="last_name" readonly>
+
+    <label for="address"><b>주소</b></label>
+    <input type="text" name="address" placeholder="{{user.profile.address}}" readonly>
+
+    <label for="bizNumber"><b>사업자등록번호</b></label>
+    <input type="text" placeholder="{{user.profile.bizNumber}}" name="bizNumber" readonly>
+
+    <form action="(% url 'user_delete' %)" id="delete">
+        {% csrf_token %}
+        <input type="button" class="btn btn-primary" onclick="confrm()" value="탈퇴하기"> 
+        <script>
+            form = document.getElementById('delete')
+
+            function confrm() {
+                var resuly = confirm("정말로 탈퇴하시겠습니까?")
+                if (result) {
+                    alert("탈퇴가 완료되었습니다.")
+                    form.submit()
+                }
             }
-        }
-    </script>
-</form>
-<div class="col-xs-6 col-md-3">
-    <!-- {% if profile.nickname %} -->
-    <h2>{{ user.profile.username }}님의 Profile</h2>
-    <h2>{{ profile.user }}님의 profile</h2>
-    <!-- {% endif %} -->
-    <!-- {% if profile == profile.id %} -->
-    <!-- 로그인한 사용자와 profile_user(프로필 소유자)가 일치할 때만 프로필 편집이 가능하도록 함 -->
-    <a href="{% url 'update' %}">계정수정하기</a></h2>
-   
-    <h3>
-        {{ user.profile.username }}
-        {{ profile.user }}
-        <br>
-        {{ user.profile.fist_name }}
-        {{ profile.nickname }}
-        <br>
-        <!-- {% endif %} -->
-    </h3>
+        </script>
+    </form>
 </div>
-</div>
+<style>
+    input[type=text],
+    input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    input[type=text]:focus,
+    input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    button:hover {
+        opacity: 1;
+    }
+</style>
 
 {% endblock %}

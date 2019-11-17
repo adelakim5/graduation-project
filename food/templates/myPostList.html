@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .list-group {
+        margin-top: 1rem;
+    }
+
+    .table {
+        max-width: 100%;
+        padding-left: 1rem;
+        font-weight: bold;
+    }
+
+    h4 {
+        margin-bottom: 2rem;
+        font-weight: bold;
+    }
+
+    .col-lg-9,
+    .btn {
+        margin-top: 1rem;
+    }
+
+    .private{
+        float: rigtht;
+    }
+</style>
+<!--new.html content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <h4>게시글 조회 및 관리</h4>
+            <div class="list-group">
+                <a href="{% url 'new' %}" class="list-group-item">게시글 작성</a>
+                <a href="{%url 'myposts'%}" class="list-group-item">게시글 조회 및 관리</a>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            {% for post in post_list %}
+            <section class="row align-items-center my-5">
+                <div class="col-lg-7">
+                    {% if post.image %}
+                    <a href="{% url 'detail' post.id %}">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ post.image.url }}" alt="photo">
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="col-lg-5">
+                    <h2 class="font-weight-bold">{{ post.title }}</h2>
+                    <p>{{ post.description }}<br>(후기: {{post.approved_comments.count}}개)</p>
+                    <p>{{ post.price }}원</p>
+                    <a href="{% url 'detail' post.id  %}" class="btn btn-primary">더보기</a>
+                    <div class="private">
+                        <a class="btn btn-default" href="{% url 'edit' post.id %}">수정</a>
+                        <form action="{% url 'delete' post.id %}" id="food-delete" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-default" onclick="confrm()" value="삭제">
+                        </form>
+                        <script>
+                            form = doucment.getElementById('food-delete')
+
+                            function confrm() {
+                                var result = confirm("정말로 삭제하시겠습니까?")
+                                if (result) {
+                                    alert('삭제되었습니다.')
+                                    form.submit()
+                                }
+                            }
+                        </script>
+
+                    </div>
+                </div>
+            </section>
+            <hr>
+            {% endfor %}
+        </div>
+        {% endblock %}

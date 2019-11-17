@@ -6,5 +6,5 @@ from decimal import Decimal
 admin.site.register(Food)
 admin.site.register(Comment)
 admin.site.register(Cart)
-admin.site.register(SuccessCart)
+admin.site.register(Cart2)
 

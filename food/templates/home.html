@@ -64,7 +64,7 @@
     </div>
     <div class="col-lg-5">
       <h2 class="font-weight-bold">{{ food.title }}</h2>
-      <p>{{ food.description }}<br>(후기: {{food.approved_comments.count}}개)</p>
+      <p>{{ food.description }}<br>(후기: {{food.comments.count}}개)</p>
       <p>{{ food.price }}원</p>
       <a href="{% url 'detail' food.id  %}" class="btn btn-primary">더보기</a>
     </div>
