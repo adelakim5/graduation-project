@@ -15,17 +15,18 @@ def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.get(username=request.POST['username'])
+                the_user = User.objects.get(username=request.POST['username'])
+                user = Profile.objects.get(user=the_user)
                 return render(request, 'signup.html', {'error': '이미 사용중인 아이디입니다.'})
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
                 nickname = request.POST['nickname']
                 address = request.POST['address']
                 bizNumber = request.POST['bizNumber']
-                # photo = photo받아오는거 추가해야함
                 profile = Profile(user=user, nickname=nickname, address=address, bizNumber=bizNumber)
                 profile.save()
                 auth.login(request, user)
+                messages.success(request, '가입되었습니다.')
                 return redirect('home')
     return render(request, 'signup.html')
 

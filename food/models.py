@@ -31,8 +31,6 @@ class Food(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
-    # 카카오톡 아이디로 변경해야함
-    # settings.AUTH_USER_MODEL 
     post = models.ForeignKey('food.Food', related_name='comments', on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
@@ -87,5 +85,6 @@ class Customer(models.Model):
     whose = models.ForeignKey('accounts.Profile', default=1, on_delete=models.CASCADE)
     reason = models.CharField(max_length=100, choices=REASON, default='accept')
     others = models.TextField()
-    how_many = models.PositiveIntegerField(default=1, null=True)
+    # comments가 갯수 세어진것처럼 
+    how_many2 = models.PositiveIntegerField(default=1)
     

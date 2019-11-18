@@ -44,36 +44,54 @@ def past(request):
     me = Profile.objects.get(user=request.user)
     past = Cart3.objects.all().filter(receiver=me)
     past = past.order_by('-date')
+    # 고객등록을 누르면 Customer로 저장 
     if request.method == 'POST':
-        customer = User.objects.get(username=request.POST['sender'])
-        whose = me
-        reason = 'accept'
-        other = ''
-        # how_many = 1
-        # 요청 건수를 어떻게 계산할 수 있을지를 생각해봐야 할 것 같음. 그리고 출력도 왜 자꾸 그따윈지 ㅜㅜ 
-        custom = Customer(customer=customer, whose=whose, reason=reason, others=other)
-        custom.save()
-        return redirect('myCustomer')
+        the_customer = User.objects.get(username=request.POST['sender'])
+        c_c = Customer.objects.all().filter(whose=me).filter(customer=the_customer)
+        # 만약 고객이 저장되어 있으면 
+        if c_c is not None:
+            return render(request, 'past.html', {'error':'이미 등록된 고객입니다.'})
+        # 아니면 
+        else:
+            reason = ''
+            other = ''
+            # Cart3에서 receiver=me, sender=the_customer인 애들만 골라와
+            how_many = Cart3.objects.all().filter(receiver=me).filter(sender=the_customer)
+            # 그 애들의 개수
+            how_many2 = how_many.count()
+            custom = Customer(customer=the_customer, whose=me, reason=reason, others=other, how_many2=how_many2)
+            custom.save()
+            print(custom)
+            # 저장하기 
+            return redirect('manage')
     return render(request, 'past.html', {'past':past})
 
 # # 매장이 보는 나한테 요청한 고객
-def myCustomers(request):
-    if request.method == 'POST':
-        me = Profile.objects.get(user=request.user)
-        myCus = Customer.objects.all().filter(whose=me)
-        reason = request.POST['reason']
-        other = request.POST['other']
-        # how_many = myCus.how_many + 1
-        cus = Customer(reason=reason, others=other)
-        cus.save()
-        return redirect('manage')
-    return render(request, 'myCustomers.html', {'customers':myCus})
-
-# 집중고객 페이지
 def manage(request):
     me = Profile.objects.get(user=request.user)
-    the_customer = Customer.objects.all().filter(whose=me)
-    return render(request, 'manage.html', {'the_customer':the_customer})
+    # whose=me인 Customer 데베를 불러옴 
+    myCus = Customer.objects.all().filter(whose=me)
+    # 등록을 누르면 
+    if request.method == 'POST':
+        others = request.POST['others']
+        reason = request.POST['reason']
+        # Customer에 등록되는 고객의 계정이름 
+        the_customer = User.objects.get(username=request.POST['sender'])
+        # whose=me, customer=the_customer인 튜플의 수
+        # how_many = the number of Customer's tuple where whose is me and customer is the_customer
+        # the number of (select * from Customer where whose = me and custmer = the_customer) 
+        how_many = Cart3.objects.all().filter(receiver=me).filter(sender=the_customer).count()
+        the_cus = Customer(customer=the_customer, whose=me, reason=reason, others=others, how_many2=how_many)
+        the_cus.save()
+        return redirect('myCustomer')
+    return render(request, 'manage.html', {'customers':myCus})
+
+# 집중고객 페이지
+def myCustomers(request):
+    me = Profile.objects.get(user=request.user)
+    mycustomers = Customer.objects.all().filter(whose=me)
+    # how_many는 Cart3의 receiver=me, sender가 customer의 customer의 개수 
+    return render(request, 'myCustomers.html', {'the_customer':mycustomers})
     
 # 매장이 보는 게시글관리 
 def post_retrieve(request):

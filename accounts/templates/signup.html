@@ -9,6 +9,14 @@
   <br>
   {% endif%}
 </div>
+{% if messages %}
+	{% for message in messages %}
+		{{ message.tags }}
+		{{ message.message }}
+	{% endfor %}
+{% endif %}
+
+
 
 <div class="container">
   <h1>매장을 등록하고 싶으신가요?</h1>

@@ -1,15 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if error %}
+<br>
+{{ error }}
+<br>
+{% endif %}
 
-{% for one in the_customer %}
 
-{{one.customer}}
+{% if customers %}
+<form action="{% url 'myCustomer' %}" method="POST">
+    {% csrf_token %}
+    고객이름:
+    <input type="text" name="sender" value="{{customers.customer}}" readonly>
+    <br>
+    요청건: {{customers.how_many2}}<br>
+    사유:
+    <!-- <form action="url 'myCustomer'" method="POST">
+        csrf_token -->
+    <!-- 등록을 누르면 사유가 바뀌게  -->
+    <select name="reason" id="reason">
+        <option value="accept">승인</option>
+        <option value="cancel">거절</option>
+        <option value="no-show">노쇼</option>
+        <option value="etc">etc</option>
+    </select>
+    <br>
+    <textarea name="others" id="" cols="30" rows="10" placeholder="집중고객으로 등록하는 이유를 간단히 적어주세요."></textarea>
+    <br>
+    <input type="submit" name="reg" value="등록">
+    <!--</form> -->
 
-{{one.reason}}
-{{one.others}}
+    {% endif %}
+</form>
 
-{{one.how_many}}
+<a href="{% url 'myCustomer' %}">집중고객 관리페이지</a>
 
-{% endfor %}
 
 {% endblock %}

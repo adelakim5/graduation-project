@@ -43,11 +43,12 @@
                         <td>{{p.title}}</td>
                     </tr>
                     <tr>
-                        <td>요청인</td>
+                        <td>요청인/요청횟수</td>                   
                         <td>
                             <form action="{% url 'past' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="text" name="sender" value="{{p.sender}}" readonly>
+                                <!-- <input type="number" name="how_many" value={{p.sender.count}} readonly> -->
                                 <input type="submit" class="btn" name="myCustomer" id="mycus" value="고객등록">
                             </form>
                         </td>
