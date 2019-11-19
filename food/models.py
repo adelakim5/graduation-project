@@ -88,3 +88,7 @@ class Customer(models.Model):
     # comments가 갯수 세어진것처럼 
     how_many2 = models.PositiveIntegerField(default=1)
     
+class Alarm(models.Model):
+    message = models.CharField(max_length=100)
+    
+    

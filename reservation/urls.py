@@ -4,10 +4,22 @@ import food.views
 from django.conf import settings
 from django.conf.urls.static import static 
 from accounts import views as accounts
+# room url때문에 import. 나중에 path형식으로 바꾸는 거 알아보고 수정하자
+from django.conf.urls import url
+
 # from cart import views 
 
 urlpatterns = [
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    # 채팅 url
+    path('index/', food.views.index, name='index'),
+    url(r'^(?P<room_name>[^/]+)/$', food.views.room, name='room'),
+    # path('ckeditor/', include('ckeditor_uploader.urls')),
+    # alarms.views 
+    path('ShareMe', food.views.ShareMe.as_view()),
+    path('Alarm', food.views.Alarm.as_view()),
+    # accounts.views 
+    path('localaccounts/', include('accounts.urls')),
+    # food.views 
     path('<int:food_id>/cart/', food.views.cart, name="cart"),
     path('myCart/', food.views.myCart, name="myCart"),
     path('requested_cart/', food.views.requested_cart, name="requested_cart"),
@@ -15,7 +27,6 @@ urlpatterns = [
     path('', food.views.home, name="home"),
     path('<int:food_id>/', food.views.detail, name="detail"), 
     # allauth.url 추가시키는거 재확인 요망 
-    path('localaccounts/', include('accounts.urls')),
     path('accounts/', include('allauth.urls')),
     path('new/', food.views.foodpost, name='new'),
     path('check/',food.views.checkplz, name="checkplz"),

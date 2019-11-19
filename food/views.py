@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from .models import *
+from . import models
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.utils import timezone 
@@ -10,9 +11,71 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import *
 from allauth.socialaccount.models import SocialAccount, SocialToken
 import requests, json
+# 채팅방
+from django.utils.safestring import mark_safe
 from django.db.models.functions import Replace
 from django.db.models import Value
+from django.views.generic import TemplateView
+import json
 # Create your views here.
+
+# 채팅 뷰 
+def index(request):
+    return render(request, 'index.html', {})
+
+def room(request, room_name):
+    return render(request, 'room.html', {
+        'room_name_json': mark_safe(json.dumps(room_name))
+    })
+
+# 공유버튼을 누르기 위한 클래스
+class Alarm(TemplateView):
+    template_name = 'templates/alarm.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        context['username'] = self.request.user.username
+        
+        return context
+
+# 알람을 받을 클래스 
+class ShareMe(TemplateView):
+    template_name = 'templates/LikeMe.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        context['username']=self.request.user.username
+        
+        return context
+    
+    def post(self, request,**kwargs):
+        ins = models.Alarm()
+        data_unicode = request.body.decode('utf-8')
+        data = json.loads(data_unicode)
+        ins.message = data['message']
+        ins.save()
+        
+        return HttpResponse('')
+# eventstream
+# from django_eventstream import send_event
+# channel manager
+# from django_eventstream.channelmanager import DefaultChannelManager
+# # channel permission change
+# from django_eventstream import channel_permission_changed
+
+# channel_permission_changed(user, '_mychannel')
+
+# # eventstream
+# send_event('test', 'message', {'text':'hello world'} )
+
+# # channel manager
+# class MyChannelManager(DefaultChannelManager):
+#     def can_read_channel(self, user, channel):
+#         # require auth for prefixed channels
+#         if channel.startswith('_') and user is None:
+#             return False
+#         return True
+# channel manager 
 
 def person(request):
     profile = Profile.objects.get_username()
@@ -269,6 +332,17 @@ def checkplz(request):
         return redirect(resp['next_redirect_pc_url'])
     else:
         return redirect('fail')
+    
+def fcm(request):
+    ids = Profile.objects.get(user=request.user)
+    notification = {
+        "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+        # 토큰인가..
+        "notification" : {
+            "body" : "great match!",
+            "title" : "Portugal vs. Denmark",
+            }
+        }
     
 
 def checkCanceled(request, cart2_id):

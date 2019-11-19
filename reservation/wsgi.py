@@ -12,5 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'reservation.settings')
+os.environ["SECRET_KEY"] = "$&@n1s@u&&s($$us@=-snd(qpfw0!-@dhn&!@0&@-@0fnbd-!@"
 
 application = get_wsgi_application()

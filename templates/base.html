@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(function () {
+      OneSignal.init({
+        appId: "28da4565-8248-4583-9054-07f36810059a",
+      });
+    });
+  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -41,6 +50,7 @@
         font-size: 3.5rem;
       }
     }
+
     footer {
       margin-top: 5rem;
     }
@@ -138,6 +148,8 @@
   <script src="/docs/4.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous">
   </script>
+
+
 </body>
 
 </html>
