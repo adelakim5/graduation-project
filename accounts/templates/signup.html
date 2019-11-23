@@ -1,116 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<style>
-  .profile-form,
-  .profile {
-    padding: 3rem;
-  }
-
-  btn-2 {
-    background-color: #ffeb33;
-  }
-
-
-
-  hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-  }
-
-  btn-2:hover {
-    opacity: 1;
-  }
-
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
-    margin: auto;
-    text-align: center;
-    font-family: arial;
-  }
-
-  .title {
-    color: grey;
-    margin: 2rem;
-  }
-
-  .btn-5 {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    background-color: #ffeb33;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 18px;
-  }
-
-  .btn-5:hover,
-  a:hover {
-    opacity: 0.7;
-  }
-
-
-  .signup-page {
-    font-weight: bolder;
-  }
-
-  .explanation {
-    padding: 6rem;
-    background-color: black;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    text-align: center;
-  }
-
-  .btn-6 {
-    background-color: #fee41a;
-    font-size: medium;
-    padding: 1rem;
-    margin-top: 2rem;
-  }
-
-  .warning {
-    margin-top: 1rem;
-    width: 100%;
-    background-color: #fee41a;
-    border-radius: 5px;
-    color: black;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 1rem, 0, 1rem, 0;
-  }
-
-  .warning p {
-    padding: 1rem;
-  }
-
-  .signup-form {
-    padding: 16px;
-    color: black;
-  }
-
-
-  input[type=submit]:hover {
-    opacity: 1;
-  }
-
-  input[type=text],
-  input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
-  }
-
-  input[type=text]:focus,
-  input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'images/for_accounts.css' %}">
 
 <div class="message" role="alert">
   {% if error %}
@@ -155,12 +46,18 @@
 
       <label for="bizNumber"><b>사업자등록번호*</b></label>
       <input type="text" placeholder="정확히 기입해 주세요." name="bizNumber" required>
-      <p>*는 필수항목입니다.</p>
+      <div class="attention">
+        <p style="text-align: left;">*는 필수항목입니다. <br>
+          가입이 최종적으로 완료되기 위해선 관리자의 승인이 필요합니다. 승인은 가입 후 7일이내에 이루어질 예정입니다. <br>
+          최종승인이 이루어진 다음에 게시글 작성 및 관리, 예약 요청 수신 및 확인, 고객 관리가 가능합니다. <br>
+          승인이 이루어지기 전에는 해당 서비스를 매장계정으로서 이용하기 어려운 점 숙지하시기 바랍니다. </p>
+      </div>
       <div class="clearfix">
-        <input type="submit" class="btn btn-block btn-6" value="가입하기">
+        <input type="submit" class="btn btn-block kakao-btn" value="가입하기">
       </div>
     </form>
   </div>
+  <a href="{% url 'login' %}">로그인페이지로 돌아가기</a>
 </div>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth, messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 # from django.contrib.contenttypes.models import ContentType
 # from django.contrib.auth.views import LoginView as auth_login
 # from allauth.socialaccount.models import SocialApp
@@ -10,6 +10,12 @@ from django.views import View
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import Profile
+# from django import template
+
+# register = template.Library()
+# @register.filter(name='has_group')
+# def has_group(user, group_name):
+#     return user.groups.filter(name=profile_user).exists()
 
 def signup(request):
     if request.method == 'POST':
@@ -20,6 +26,7 @@ def signup(request):
                 return render(request, 'signup.html', {'error': '이미 사용중인 아이디입니다.'})
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
+                user.has_perm('profile_status')
                 nickname = request.POST['nickname']
                 address = request.POST['address']
                 bizNumber = request.POST['bizNumber']
@@ -35,10 +42,20 @@ def user_delete(request):
         deleted_user = User.objects.all().filter(username=request.user)
         deleted_user.delete()
         return redirect('home')
-
     except Exception:
         return render(request, 'profile.html', {'error':'탈퇴실패'})
     return render(request, 'home.html')
+
+def update_profile(request):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        profile.nickname = request.POST['nickname']
+        profile.address = request.POST['address']
+        profile.bizNumber = request.POST['bizNumber']
+        profile.save()
+        return redirect('profile_detail')
+    else:
+        return render(request, 'profile_update.html')
 
 def profilepage(request):
     return render(request, 'profile.html')
@@ -47,31 +64,6 @@ def user_profile(request):
     user = User.objects.all().filter(username=request.user)
     profile = Profile.objects.all().filter(user=request.user)
     return render(request, 'profile_detail.html', {'profile':profile})
-
-# def update(request):
-#     user = User.objects.all().filter(username=request.user)
-#     profile = Profile.objects.all().filter(user=request.user)
-#     if request.method == 'POST':
-# #  profile.html에 password확인해서 사용자 맞으면 profile_update.html에 들어갈 수 있게 하기 
-#             first_name = request.POST['first_name']
-#             last_name = request.POST['last_name']
-#             nickname = request.POST['nickname']
-#             address = request.POST['address']
-#             user = User(first_name=first_name, last_name=last_name)
-#             user.save()
-#             profile = Profile(nickname=nickname, address=address)
-#             profile.save()
-#             return redirect('profile')
-#     return render(request, 'profile_update.html', {'profile':profile, 'user':user})
-            
-        
-        # if form.is_valid():
-        #     new_profile = form.save(commit=False)
-        #     new_profile.save()
-        #     return redirect('profile', profile_id=profile_id)
-        # else :
-        #     form = ProfileForm(instance=user_profile)
-        # return render(request, 'profile_update.html', {'form':form})
 
 def login(request):
     if request.method == 'POST':

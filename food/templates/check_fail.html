@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
 
-결제 실패.
 
-<a href="{% url 'home' %}">홈으로 가기</a>
+<div class="current">
+    <div class="container jumbotron">
+        <h1>요청이 정상적으로 이루어지지 않았습니다.</h1>
+        <p style="margin: 2rem;">다음과 같은 사유 때문일 수 있습니다.</p>
+        <ul>
+            <li>시스템의 오류로 같은 요청이 반복해서 진행되었을 수 있습니다.</li>
+            <li>장바구니의 내용에 비정상적인 입력이 있을 수 있습니다.</li>
+            <li>계좌에 잔고가 충분하지 않거나 결제한 카드가 만료되었을 수 있습니다.</li>
+            <li>기타 다른 사유는 <a href="https://pay-cs-web.kakao.com/faq">카카오페이</a>(1644-7405)에 문의하는 것이 좋습니다. 결제 금액과 결제 시도 시간을 알려주어 결제가 승인될 수 있도록 해주세요.</li>
+        </ul>
+    </div>
+
+</div>
+
+<a href="{% url 'home' %}" class="btn">홈으로 가기</a>
 
 {% endblock %}

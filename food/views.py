@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from .models import *
 from . import models
 from django.contrib.auth.models import User
+# message
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.utils import timezone 
 from .forms import *
@@ -64,26 +66,49 @@ def requested_cart(request):
     requested_list = Cart2.objects.all().filter(receiver=the_receiver)
     return render(request, 'requested_cart.html', {'request_list':requested_list})
 
+# 고객 등록 확인 
+def checking(request):
+    me = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        user_name = User.objects.get(username=request.POST['sender'])
+        the_customer = Customer.objects.all().filter(whose=me).filter(customer=user_name)
+        if the_customer.filter(reason__exact='no-show'):
+            messages.add_message(request, messages.INFO, '노쇼')
+        elif the_customer.filter(reason__exact='cancel'):
+            messages.add_message(request, messages.INFO, '취소')
+        elif the_customer.filter(reason__exact='accept'):
+            messages.add_message(request, messages.INFO, '승인')
+        elif the_customer.filter(reason__exact='etc'):
+            messages.add_message(request, messages.INFO, '기타')     
+        else:
+            messages.add_message(request, messages.INFO, '없음')
+    return redirect('requested_cart')
+    
+        
+
 # 매장이 보는 지난 요청 내역
 def past(request):
     me = Profile.objects.get(user=request.user)
     past = Cart3.objects.all().filter(receiver=me)
     past = past.order_by('-date')
+    cus = Customer.objects.all().filter(whose=me)
+    form = CustomerForm(request.POST)
     # 고객등록을 누르면 Customer로 저장 
     if request.method == 'POST':
         sender = User.objects.get(username=request.POST['sender'])
         receiver = Profile.objects.get(user=request.user)
-        form = CustomerForm(request.POST)
-        customer = Customer(customer=sender, whose=receiver)
-        customer.save()
-        if form.is_valid():
-            cus = form.save(commit=False)
-            cus.reason = request.POST['reason']
-            cus.others = request.POST['others']
-            cus.save()
-            return redirect('customer_list')
-    else:
-        form = CustomerForm()
+        if cus.filter(customer=sender):
+            messages.add_message(request, messages.ERROR, '이미 등록된 고객입니다.')
+            return redirect('past')
+        else:
+            if form.is_valid():
+                customer = form.save(commit=False)
+                customer.customer = sender
+                customer.whose = receiver
+                customer.reason = request.POST['reason']
+                customer.others = request.POST['others']
+                customer.save()
+                return redirect('customer_list')
     return render(request, 'past.html', {'past':past, 'form':form})
 
 # 고객 수정, 관리
@@ -96,35 +121,14 @@ def manage(request, customer_id):
             custom = form.save(commit=False)
             custom.whose = Profile.objects.get(user=request.user)
             custom.reason = request.POST['reason']
+            custom.others = request.POST['others']
             custom.customer = User.objects.get(username=customer_detail.customer)
             custom.save()
-            return redirect('customer_list', customer_id=customer_id)
+            return redirect('customer_list')
     else:
         form = CustomerForm(instance=customer_detail)
         return render(request, 'manage.html', {'form':form, 'customer':customer_detail})
 
-# 고객 등록
-def myCustomers(request):
-    if request.method == 'POST':
-        me = Profile.objects.get(user=request.user)
-        the_customer = User.objects.get(username=request.POST['sender'])
-        myCustomer = Customer.objects.all().filter(whose=me).filter(customer=the_customer)
-        if myCustomer is None:
-            form = CustomerForm(request.POST)
-            if form.is_valid():
-                cus = form.save(commit=False)
-                cus.customer = the_customer
-                cus.whose = me
-                cus.how_many2 = myCustomer.count()
-                cus.reason = ''
-                cus.others = ''
-                cus.save()
-            # 저장 다 하면 조회 홈페이지로 돌리기
-                return redirect('customer_list')
-        else:
-            form = CustomerForm()  
-            return render(request, 'myCustomers.html', {'form':form})
-        
 # 고객 조회
 def customer_list(request):
     me = Profile.objects.get(user=request.user)
@@ -211,23 +215,23 @@ def successPage(request):
         return redirect('fail')
 
 # 결제준비가 된 고객의 주문을 매장이 볼 수 있도록 cart2모델에 저장하기 
-def successCart(request, cart_id):
-    cart_detail = get_object_or_404(Cart, pk=cart_id)
-    if request.method == 'POST':
-        sender = cart_detail.sender
-        receiver = cart_detail.receiver
-        people = cart_detail.people
-        total_price = cart_detail.total_price
-        request_date = timezone.now()
-        title = cart_detail.title
-        phone = cart_detail.phone
-        cart2 = Cart2(sender=sender, receiver=receiver, people=people, total_price=total_price, request_date=request_date, title=title,phone=phone)
-        cart2.save()
-        # 그럼 이제 cart는 삭제
-        cart_detail.delete()
-        return redirect('home')
-    else:
-        return render(request, 'ordering.html', {'cart':cart_detail})
+# def successCart(request, cart_id):
+#     cart_detail = get_object_or_404(Cart, pk=cart_id)
+#     if request.method == 'POST':
+#         sender = cart_detail.sender
+#         receiver = cart_detail.receiver
+#         people = cart_detail.people
+#         total_price = cart_detail.total_price
+#         request_date = timezone.now()
+#         title = cart_detail.title
+#         phone = cart_detail.phone
+#         cart2 = Cart2(sender=sender, receiver=receiver, people=people, total_price=total_price, request_date=request_date, title=title,phone=phone)
+#         cart2.save()
+#         # 그럼 이제 cart는 삭제
+#         cart_detail.delete()
+#         return redirect('home')
+#     else:
+#         return render(request, 'ordering.html', {'cart':cart_detail})
 
 # 매장 글 등록
 def foodpost(request):
@@ -260,7 +264,7 @@ def edit(request, food_id):
             # 게시글 관리에서 수정할 수 있게 옮기자(게시글 관리 페이지 만들면)
     else:
         form = FoodPost(instance=food_detail)
-    return render(request, 'edit.html', {'form':form})        
+    return render(request, 'edit.html', {'form':form})     
 
 
     #홈화면의 서치바    

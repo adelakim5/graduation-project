@@ -16,7 +16,10 @@
         <div class="col-lg-9">
             <ul>
                 <li>현재 나에게 온 요청 내역을 확인할 수 있습니다.</li>
-                <li>응답을 기다리는 고객님들을 위해 가능한 바로바로 확인(거절/승인)해주세요.</li>
+                <li>응답을 기다리는 고객님들을 위해 가능한 바로바로 <strong>확인(거절 / 승인)</strong>해주세요.</li>
+                <li>결제상태는 <strong>(1: 완료 / -1: 실패)</strong>로 표기됩니다. </li>
+                <li>만약 "-1" 이라면, 결제가 실패한 상태이므로 거절버튼을 누르십시오.</li>
+                <li>확인을 마친 내역은 <strong>지난 요청 내역</strong>에서 확인할 수 있습니다.</li>
             </ul>
             <section class="align-items-center my-5">
                 {% for requests in request_list %}
@@ -25,9 +28,26 @@
                         <th>요청번호</th>
                         <th><input type="text" name="cart2_id" value="{{ requests.pk }}" readonly></th>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>받는사람</td>
-                        <td><input type="number" name="people" value="{{ requests.people }}" readonly></td>
+                        <td><input type="number" name="receiver" value="{{ user }}" readonly></td>
+                    </tr> -->
+                    <tr>
+                        <td>보낸사람</td>
+                        <form action="{% url 'checking' %}" method="POST">
+                            {% csrf_token %}
+                            <td><input type="text" name='sender' , value="{{ requests.sender }}" readonly>
+                                <input type="submit" class="btn" value="등록여부확인"></td>
+                        </form>
+                    </tr>
+                    <tr>
+                        <td>고객등록사항</td>
+                        <td>{% if messages %}
+                            {% for message in messages %}
+                            {{ message.tags }}
+                            {{ message.message }}
+                            {% endfor %}
+                            {% endif %}</td>
                     </tr>
                     <tr>
                         <td>총 금액</td>
@@ -38,42 +58,45 @@
                         <td><input type="text" name="title" value="{{ requests.title }}" readonly></td>
                     </tr>
                     <tr>
-                        <td>보낸사람</td>
-                        <td><input type="text" name='sender' , value="{{ requests.sender }}" readonly></td>
+                        <td>결제상태</td>
+                        <td><strong>{{ requests.status }}</strong></td>
                     </tr>
                     <tr>
                         <td>확인</td>
                         <td>
-                            <form action="{% url 'checkCanceled' requests.order_id %}" method="POST" style="display: inline;">
+                            <form action="{% url 'checkCanceled' requests.order_id %}" method="POST"
+                                style="display: inline;">
                                 {% csrf_token %}
                                 <button class="btn btn-deny" type="submit">거절</button>
                                 <!-- <input type="submit" name="deny" class="btn" value="거절"><br> -->
                             </form>
-                                <button class="btn" type="submit" data-toggle="modal" data-target="#doneModal">승인</button>
-                                <!-- modal -->
-                                <div class="modal" id="doneModal">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <!-- modal header -->
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">예약/대기 예정시간 입력</h4>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                <!-- modal body -->
-                                                <div class="modal-body">
-                                                    <form action="{% url 'checkDone' requests.order_id %}" method="POST" enctype="multipart/form-data">
-                                                        {% csrf_token %}
-                                                        <input type="number" name="minute" placeholder="ex. 10분, 30분, 50분">분 <br>
-                                                        <input type="submit" class="btn" value="입력완료">
-                                                    </form>
-                                                </div>
-                                                <!-- modal footer -->
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn" data-dismiss="modal">닫기</button>
-                                                </div>
-                                            </div>
+                            <button class="btn" type="submit" data-toggle="modal" data-target="#doneModal">승인</button>
+                            <!-- modal -->
+                            <div class="modal" id="doneModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <!-- modal header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">예약/대기 예정시간 입력</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- modal body -->
+                                        <div class="modal-body">
+                                            <form action="{% url 'checkDone' requests.order_id %}" method="POST"
+                                                enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="number" name="minute" placeholder="ex. 10분, 30분, 50분">분
+                                                <br>
+                                                <input type="submit" class="btn" value="입력완료">
+                                            </form>
+                                        </div>
+                                        <!-- modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-dismiss="modal">닫기</button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
                             </form>
                             <!-- <input type="submit" name="ok" class="btn" value="승인"><br> -->
                         </td>

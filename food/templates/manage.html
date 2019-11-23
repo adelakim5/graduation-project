@@ -10,62 +10,37 @@
 {% endif %}
 
 
-<section class="manage">
-    <form method="POST" enctype="multipart/form-data">
+<section class="container comment-pg">
+    <div class="message">
+        <h3>등록하신 고객의 정보입니다.</h3>
+        <ul>
+            <li>고객등록 당시 등록한 사유를 확인할 수 있습니다.</li>
+            <li>내용을 수정하고 등록버튼을 누르시면, 수정된 내용으로 업데이트 됩니다.</li>
+        </ul>
+    </div>
+    <!-- 수정사항내용 -->
+    <form method="POST" enctype="multipart/form-data" id="register" action="{% url 'manage' customer.id %}">
         {% csrf_token %}
-        고객명: {{ customer.customer }}
-        사유 : {{ customer.reason }}
-        기타사유: {{ customer.others }}
-        
-
-        {{form|crispy}}
-
+        <strong style="font-size: large; text-decoration: underline;">고객명: {{ customer.customer }}</strong>
+        <div style="margin-top: 1rem;">
+            {{ form|crispy }}
+        </div>
         <input type="submit" class="btn btn-block" name="reg" value="등록">
     </form>
-
-    <a href="{% url 'customer_list' %}">customer_list</a>
-
+<!-- 수정사항내용 끝 -->
+    <a href="{% url 'customer_list' %}" class="btn btn-deny" style="color:white; margin-top: 2rem;">목록으로 돌아가기</a>
 </section>
+<script>
+        form = doucment.getElementById('register')
+    
+        function confrm() {
+            var result = confirm("등록하시겠습니까?")
+            if (result) {
+                alert('등록되었습니다.')
+                form.submit()
+            }
+        }
+    </script>
+
 
 {% endblock %}
-<!-- <input type="text" name="sender" value="{{cus.customer}}" readonly> -->
-<!-- <table>
-            <tr>
-                <th>고객이름</th>
-                <th><input type="text" name="sender" value="{{cus.customer}}" readonly></th>
-            </tr>
-            <tr>
-                <td>요청건</td>
-                <td>{{cus.how_many2}}</td>
-            </tr>
-            <tr>
-                <td>사유</td>
-                <td>
-                   {{form|crispy}}
-                </td>
-            </tr>
-            <tr>
-                <td>기타사유</td>
-                <td><textarea name="others" id="" cols="30" rows="10"
-                        placeholder="집중고객으로 등록하는 이유를 자세히 적어주세요."></textarea>
-                </td>
-            </tr>
-        </table> -->
-
-<!-- 고객이름:
-    <input type="text" name="sender" value="{{customers.customer}}" readonly>
-    <br>
-    요청건: {{customers.how_many2}}<br>
-    사유:
-    <form action="url 'myCustomer'" method="POST">
-        csrf_token -->
-<!-- 등록을 누르면 사유가 바뀌게  -->
-<!-- <select name="reason" id="reason">
-        <option value="accept">승인</option>
-        <option value="cancel">거절</option>
-        <option value="no-show">노쇼</option>
-        <option value="etc">etc</option>
-    </select>
-    <br>
-    <textarea name="others" id="" cols="30" rows="10" placeholder="집중고객으로 등록하는 이유를 간단히 적어주세요."></textarea>
-    <br> -->

@@ -1,27 +1,8 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-
-<style>
-    #searchBar {
-        width: 100%;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-        background-color: white;
-        background-image: url('searchicon.png');
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        padding: 12px 20px 12px 40px;
-    }
-
-    title {
-        text-decoration: none;
-    }
-
-</style>
-
+<link rel="stylesheet" href="{% static 'style.css' %}">
+  
 <main role="main">
     <section class="jumbotron text-center">
         <div class="container">
@@ -73,14 +54,4 @@
     <hr>
     {% endfor %}
 </div>
-
-
-<!--<body>
-    {% for post in posts %}
-    <h1>{{ post.title }}</h1>
-    <h3>{{ post.category }}</h3>
-    <h3>{{ post.category2 }}</h3>
-    <img src="{{ post.image.url }}" alt="">
-    {% endfor %}
-</body>
-{% endblock %}-->
+{% endblock %}

@@ -12,6 +12,20 @@
 
 <!-- 요청내역 -->
 <!-- 매장에서 요청 온 내역을 보는 곳 -->
+{% if messages %}
+{% for message in messages %}
+<br>
+<br>
+<div style="background-color: #a4ffa4; 
+width: 100%; 
+height:5rem;
+padding:20px;
+font-weight: bolder;">
+    {{ message.tags }}
+    {{ message.message }}
+</div>
+{% endfor %}
+{% endif %}
 
 <div class="container">
     <div class="row past">
@@ -27,6 +41,8 @@
             <ul>
                 <li>지난 요청 내역을 확인할 수 있습니다.</li>
                 <li>결제상태는 응답 여부에 따라 <strong>(-1: 거절, 1: 승인)</strong> 으로 표시됩니다.</li>
+                <li>고객등록 버튼으로 <strong>My 고객</strong>에 등록해보세요. 노쇼, 취소 등 효과적인 고객관리가 가능합니다.</li>
+                <li>같은 고객은 중복 등록이 불가능합니다. <strong>My 고객</strong>에서 수정할 수 있습니다.</li>
             </ul>
             {% for p in past %}
             <section class="align-items-center my-5">
@@ -78,19 +94,15 @@
                                                             {{form|crispy}}
                                                         </td>
                                                     </tr">
-                                                    <tr>
-                                                        <td>
-                                                            <textarea name="others" cols="50" rows="4"
-                                                                placeholder="자세한 사유를 적어주세요."></textarea>
-                                                        </td>
-                                                    </tr>
                                                 </table>
-                                                <input type="submit" class="btn-block btn" value="등록" style="margin-top:2rem">
+                                                <input type="submit" class="btn-block btn" value="등록"
+                                                    style="margin-top:2rem">
                                             </form>
                                         </div>
                                         <!-- modal footer -->
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-for-close" data-dismiss="modal">닫기</button>
+                                            <button type="submit" class="btn btn-for-close"
+                                                data-dismiss="modal">닫기</button>
                                         </div>
 
                                     </div>

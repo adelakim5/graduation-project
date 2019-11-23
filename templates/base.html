@@ -64,7 +64,7 @@
         <div class="row">
           <div class="col-sm-8 col-md-7 py-4">
             <h4>궁동예약?</h4>
-            <p class="text-muted">직접 가지 않고도 쉽고 빠르게 즉시 예약을 할 수 있는 서비스입니다. 원하는 식당을 검색하고 예약을 요청해보세요. 혹시 예약이 불가능 한가요? 직접 가야할
+            <p class="text-muted" style="text-align: left;">직접 가지 않고도 쉽고 빠르게 즉시 예약을 할 수 있는 서비스입니다. 원하는 식당을 검색하고 예약을 요청해보세요. 혹시 예약이 불가능 한가요? 직접 가야할
               것 같나요? 그런데 얼마나 기다려야 하는지 모르겠다구요? 걱정마세요, 버튼 하나로 대기 순번을 쉽게 받을 수 있습니다.</p>
           </div>
           <div class="col-sm-4 offset-md-1 py-4">
@@ -79,12 +79,16 @@
                   aria-expanded="false" class="dropdown-toggle">My Page</a>
                 <!--dropdown추가한 마이페이지-->
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a href="{% url 'myCart' %}" class="dropdown-item">My 내역</a>
                   <!-- user가 Profile에 있으면 아래를 부르고, 없으면 아래를 안부르게 만들고 싶다.. -->
+                  {% load auth_extras %}
+                  {% if request.user|has_group:'profile_user'%}
                   <a href="{% url 'profile' %}" class="dropdown-item">My 계정</a>
                   <a href="{%url 'customer_list' %}" class="dropdown-item">My 고객</a>
                   <a href="{% url 'myposts' %}" class="dropdown-item">My 게시글</a>
                   <a href="{%url 'requested_cart'%}" class="dropdown-item">My 요청 온 내역</a>
+                  {% else %}
+                  <a href="{% url 'myCart' %}" class="dropdown-item">My 내역</a>
+                  {% endif %}
                 </div>
               </li>
               <li><a href="#">이용가이드</a></li>
@@ -127,6 +131,9 @@
     <div class="container">
       <p class="float-right">
         <a href="#">Back to top</a>
+      </p>
+      <p class="float-left">
+        <a href="{% url 'home' %}">Home</a>
       </p>
     </div>
   </footer>

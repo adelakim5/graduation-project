@@ -77,9 +77,6 @@ class Cart3(models.Model):
     status = models.CharField(max_length=3, default='0')
     
 class Customer(models.Model):
-    REASON = (
-        ()
-    )
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
     whose = models.ForeignKey('accounts.Profile', default=1, on_delete=models.CASCADE)
     reason = models.CharField(max_length=100)

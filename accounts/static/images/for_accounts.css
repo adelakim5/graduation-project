@@ -1,76 +1,15 @@
-.message {
-    text-align: center;
-    color: red;
-    margin-bottom: 50px;
-}
-
-
-.container-form {
-    position: absolute;
-    right: 0;
-    margin: 40px;
-    max-width: 300px;
-    padding: 16px;
-    background-color: white;
-}
-
-input[type=text],
-input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
-}
-
-input[type=text]:focus,
-input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-.btn {
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-#btn-1 {
-    background-color: #4e9a9a;
-    color: white;
-}
-
-#kakao-btn {
-    background-color: #fee100;
-    color: #400000;
-}
-
-#btn-reg {
-    background-color: black;
-}
-
-p {
-    text-align: center;
-}
-
-
-.round {
-    border-radius: 50%;
-}
-
 .profile-form,
 .profile {
     padding: 3rem;
 }
 
-btn-2 {
-    background-color: #ffeb33;
+h3{
+    font-weight: bold;
 }
 
-
+.btn-2 {
+    background-color: #ffeb33;
+}
 
 hr {
     border: 1px solid #f1f1f1;
@@ -155,3 +94,88 @@ input[type=submit]:hover {
     opacity: 1;
 }
 
+input[type=text],
+input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+
+.bg-img {
+    background-image: url('https://cdn.pixabay.com/photo/2019/03/14/22/06/seat-4056023_960_720.jpg');
+    min-height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+
+.container-form {
+    position: absolute;
+    right: 0;
+    margin: 40px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: white;
+}
+
+input[type=text],
+input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.btn {
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+#btn-1 {
+    background-color: #4e9a9a;
+    color: white;
+    width: 100%;
+}
+
+.kakao-btn {
+    background-color: #fee100;
+    color: #400000;
+    width: 100%;
+}
+
+#btn-reg {
+    background-color: black;
+    color:white;
+}
+
+p {
+    text-align: center;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.btn-for-close{
+    background-color: #ddd;
+}

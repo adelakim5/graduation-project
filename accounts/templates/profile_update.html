@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static%}
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'style.css'%}">
+
+
+<div class="profile-form">
+    <h2>{{ user.profile.user }}님의 개인정보</h2>
+    <p>{{ user.profile.user }}님의 정보를 수정하세요.</p>
+    <hr>
+    <!-- 폼 -->
+    <div class="the_form">
+        <form action="{% url 'update_profile' %}" id="pro_up" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <label for="nickname"><b>닉네임</b></label>
+        <input type="text" placeholder="{{user.profile.nickname}}" name="nickname">
+
+        <label for="first_name"><b>이름</b></label>
+        <input type="text" name="first_name">
+
+        <label for="last_name"><b>성</b></label>
+        <input type="text" name="last_name">
+
+        <label for="address"><b>주소</b></label>
+        <input type="text" name="address" placeholder="{{user.profile.address}}">
+
+        <label for="bizNumber"><b>사업자등록번호</b></label>
+        <input type="text" placeholder="{{user.profile.bizNumber}}" name="bizNumber">
+
+            <input type="submit" class="btn-2" onclick="confrm()" value="수정하기">
+        </form>
+            <script>
+                form = document.getElementById('pro_up')
+
+                function confrm() {
+                    var resuly = confirm("변경사항을 모두 확인하였습니까?")
+                    if (result) {
+                        alert("등록되었습니다.")
+                        form.submit()
+                    }
+                }
+            </script>
+    </div>
+</div>
+
+
+{% endblock %}
