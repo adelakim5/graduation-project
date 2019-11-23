@@ -1,0 +1,157 @@
+.message {
+    text-align: center;
+    color: red;
+    margin-bottom: 50px;
+}
+
+
+.container-form {
+    position: absolute;
+    right: 0;
+    margin: 40px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: white;
+}
+
+input[type=text],
+input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.btn {
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+#btn-1 {
+    background-color: #4e9a9a;
+    color: white;
+}
+
+#kakao-btn {
+    background-color: #fee100;
+    color: #400000;
+}
+
+#btn-reg {
+    background-color: black;
+}
+
+p {
+    text-align: center;
+}
+
+
+.round {
+    border-radius: 50%;
+}
+
+.profile-form,
+.profile {
+    padding: 3rem;
+}
+
+btn-2 {
+    background-color: #ffeb33;
+}
+
+
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+btn-2:hover {
+    opacity: 1;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+}
+
+.title {
+    color: grey;
+    margin: 2rem;
+}
+
+.btn-5 {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    background-color: #ffeb33;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-5:hover,
+a:hover {
+    opacity: 0.7;
+}
+
+
+.signup-page {
+    font-weight: bolder;
+}
+
+.explanation {
+    padding: 6rem;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+}
+
+.btn-6 {
+    background-color: #fee41a;
+    font-size: medium;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.warning {
+    margin-top: 1rem;
+    width: 100%;
+    background-color: #fee41a;
+    border-radius: 5px;
+    color: black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1rem, 0, 1rem, 0;
+}
+
+.warning p {
+    padding: 1rem;
+}
+
+.signup-form {
+    padding: 16px;
+    color: black;
+}
+
+
+input[type=submit]:hover {
+    opacity: 1;
+}
+

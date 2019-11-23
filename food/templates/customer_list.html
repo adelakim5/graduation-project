@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .customer-list {
+        padding: 3rem;
+    }
+</style>
+
+<div class="customer-list">
+    <h4>나의 고객</h4>
+    <p>이 페이지에서 등록한 고객들을 확인할 수 있습니다.</p>
+    <div class="row">
+        {% for customer in mycustomers %}
+        <section class="container">
+            {{customer.customer}}
+            {{customer.whose}}
+            {{customer.reason}}
+            <a href="{% url 'manage' customer.pk %}">자세히보기</a>
+        </section>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

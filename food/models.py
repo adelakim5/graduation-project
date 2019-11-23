@@ -46,6 +46,7 @@ class Cart(models.Model):
     total_price = models.PositiveIntegerField(default=0)
     request_date = models.DateTimeField(default=timezone.now)
     title = models.ForeignKey(Food, default=1, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=20)
 
 class Cart2(models.Model):
     STATUS = (
@@ -63,6 +64,7 @@ class Cart2(models.Model):
     request_date = models.DateTimeField(default=timezone.now)
     title = models.ForeignKey(Food, default=1, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, choices=STATUS, default='0')
+    phone = models.CharField(max_length=20)
     
 class Cart3(models.Model):
     order_id = models.PositiveIntegerField(default=0)
@@ -75,18 +77,14 @@ class Cart3(models.Model):
     status = models.CharField(max_length=3, default='0')
     
 class Customer(models.Model):
-    REASON=(
-        ('no-show', 'no-show'),
-        ('accept', 'accept'),
-        ('cancel', 'cancel'),
-        ('etc', 'etc'),
+    REASON = (
+        ()
     )
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.CASCADE)
     whose = models.ForeignKey('accounts.Profile', default=1, on_delete=models.CASCADE)
-    reason = models.CharField(max_length=100, choices=REASON, default='accept')
+    reason = models.CharField(max_length=100)
     others = models.TextField()
     # comments가 갯수 세어진것처럼 
-    how_many2 = models.PositiveIntegerField(default=1)
     
 class Alarm(models.Model):
     message = models.CharField(max_length=100)

@@ -1,79 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static%}
 {% load staticfiles %}
 
-<style>
-    .round {
-        border-radius: 50%;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'style.css'%}">
 
-<h2>
-    {{ user.profile.user }}님의 개인정보
-
-</h2>
-<hr>
 
 <div class="profile-form">
+    <h2>{{ user.profile.user }}님의 개인정보</h2>
+    <p>{{ user.profile.user }}님이 등록하실때 기입한 정보입니다.</p>
+    <hr>
     <!-- 폼 -->
+    <div class="the_form">
+        <label for="nickname"><b>닉네임</b></label>
+        <input type="text" placeholder="{{user.profile.nickname}}" name="nickname" readonly>
 
-    <label for="nickname"><b>닉네임</b></label>
-    <input type="text" placeholder="{{user.profile.nickname}}" name="nickname" readonly>
+        <label for="first_name"><b>이름</b></label>
+        <input type="text" name="first_name" readonly>
 
-    <label for="first_name"><b>이름</b></label>
-    <input type="text" name="first_name" readonly>
+        <label for="last_name"><b>성</b></label>
+        <input type="text" name="last_name" readonly>
 
-    <label for="last_name"><b>성</b></label>
-    <input type="text" name="last_name" readonly>
+        <label for="address"><b>주소</b></label>
+        <input type="text" name="address" placeholder="{{user.profile.address}}" readonly>
 
-    <label for="address"><b>주소</b></label>
-    <input type="text" name="address" placeholder="{{user.profile.address}}" readonly>
+        <label for="bizNumber"><b>사업자등록번호</b></label>
+        <input type="text" placeholder="{{user.profile.bizNumber}}" name="bizNumber" readonly>
 
-    <label for="bizNumber"><b>사업자등록번호</b></label>
-    <input type="text" placeholder="{{user.profile.bizNumber}}" name="bizNumber" readonly>
+        <form action="(% url 'user_delete' %)" id="delete">
+            {% csrf_token %}
+            <input type="submit" class="btn-2" onclick="confrm()" value="탈퇴하기">
+            <script>
+                form = document.getElementById('delete')
 
-    <form action="(% url 'user_delete' %)" id="delete">
-        {% csrf_token %}
-        <input type="button" class="btn btn-primary" onclick="confrm()" value="탈퇴하기"> 
-        <script>
-            form = document.getElementById('delete')
-
-            function confrm() {
-                var resuly = confirm("정말로 탈퇴하시겠습니까?")
-                if (result) {
-                    alert("탈퇴가 완료되었습니다.")
-                    form.submit()
+                function confrm() {
+                    var resuly = confirm("정말로 탈퇴하시겠습니까?")
+                    if (result) {
+                        alert("탈퇴가 완료되었습니다.")
+                        form.submit()
+                    }
                 }
-            }
-        </script>
-    </form>
+            </script>
+        </form>
+    </div>
 </div>
-<style>
-    input[type=text],
-    input[type=password] {
-        width: 100%;
-        padding: 15px;
-        margin: 5px 0 22px 0;
-        display: inline-block;
-        border: none;
-        background: #f1f1f1;
-    }
 
-    input[type=text]:focus,
-    input[type=password]:focus {
-        background-color: #ddd;
-        outline: none;
-    }
-
-    hr {
-        border: 1px solid #f1f1f1;
-        margin-bottom: 25px;
-    }
-
-    button:hover {
-        opacity: 1;
-    }
-</style>
 
 {% endblock %}

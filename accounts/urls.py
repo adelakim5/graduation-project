@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile/profile_detail', views.user_profile, name="profile_detail"),
     # path('profile/update/', views.update, name='update'),
     path('oauth/', views.oauth, name="oauth"),
+    # path('hello/', views.friends, name='hello'),
     path('profile/user_delete', views.user_delete, name="user_delete"),
 ] 

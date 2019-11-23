@@ -1,36 +1,83 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static%}
+<link rel="stylesheet" href="{% static 'style.css' %}">
 
-<style>
-    input {
-        width: 100%;
-    }
-
-    .content {
-        padding: 20px 40px;
-    }
-</style>
-
-<div class="container">
-    <div class="row">
+<div>
+    <div class="cart">
         <h4>나의 장바구니</h4>
+        <ul>
+            <li>요청은 한번에 한 매장에게만 보낼 수 있습니다.</li>
+            <li>요청사항은 수정이 어려우니 결제하기 버튼을 누르기 전, 본인의 요청사항을 꼼꼼히 확인해주세요.</li>
+            <li>매장에서 승인여부를 결정하기 전까지 재요청은 불가합니다. 이 점 반드시 숙지하시길 바랍니다.</li>
+        </ul>
         <hr>
-        {% for requests in request_list %}
-        <section class="content flex">
-            <form action="{% url 'checkplz' %}" method="POST">
-                {% csrf_token %}
-                <input type="text" name="cart_id" value="{{ requests.pk }}" readonly> <br>
-                매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
-                요청인원: <input type="number" name="people" value="{{ requests.people }}" readonly><br>
-                총금액: <input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원 <br>
+        <div class="row">
+            {% for requests in request_list %}
+            <section class="container cart-form">
+                <form action="{% url 'checkplz' %}" method="POST">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <th>장바구니 번호</th>
+                            <th><input type="text" name="cart_id" value="{{ requests.pk }}" readonly></th>
+                        </tr>
+                        <tr>
+                            <td>받는사람(매장계정)</td>
+                            <td><input type="text" name="receiver" value="{{ requests.receiver }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>인원</td>
+                            <td><input type="number" name="people" value="{{ requests.people }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>결제금액</td>
+                            <td><input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>가게 이름</td>
+                            <td><input type="text" name="title" value="{{ requests.title }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>보낸사람(나의계정)</td>
+                            <td><input type="text" name='sender' , value="{{ requests.sender }}" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>전화번호</td>
+                            <td><input type="text" name="phoneNumber" value="{{ requests.phone }}" readonly></td>
+                        </tr>
+                    </table>
+                    <!-- <input type="text" name="cart_id" value="{{ requests.pk }}" readonly> <br>
+                    매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
+                    요청인원: <input type="number" name="people" value="{{ requests.people }}" readonly><br>
+                    총금액: <input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원 <br>
                 식당명: <input type="text" name="title" value="{{ requests.title }}" readonly> <br>
-                보낸이: <input type="text" name='sender' , value="{{ requests.sender }}" readonly> <br>
-                <input type="submit" value="결제하기">
-            </form>
-        </section>
-        <hr>
+                보낸이: <input type="text" name='sender' , value="{{ requests.sender }}" readonly> <br> -->
+                    <input type="submit" class="btn btn-kakao" value="카카오페이로 결제하기">
+                </form>
+
+                <form action="{% url 'cancel' requests.pk %}" method="POST" id="cancel">
+                    {% csrf_token %}
+                    <input type="submit" value="취소하고 돌아가기" onclick="confrm()" style="padding:1rem; margin-top: 2rem;">
+                </form>
+                <script>
+                    form = doucment.getElementById('cancel')
+                    function confrm() {
+                        var result = confirm("페이지를 벗어나면 현재 장바구니에 담긴 내용은 사라집니다. 계속하시겠습니까?")
+                        if (result) {
+                            form.submit()
+                        } else {
+                            alert('취소되었습니다')
+                        }
+                    }
+                </script>
+            </section>
+            <hr>
+        </div>
         {% endfor %}
     </div>
 </div>
+
 
 {% endblock %}

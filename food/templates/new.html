@@ -6,9 +6,9 @@
 
 <!--new.html content -->
 <div class="container">
-    <div class="row">
+    <div class="row new">
         <div class="col-lg-3">
-            <h4>게시글 관리</h4>
+            <h4>게시글 작성</h4>
             <div class="list-group">
                 <a href="{% url 'new' %}" class="list-group-item">게시글 작성</a>
                 <a href="{% url 'myposts' %}" class="list-group-item">게시글 조회 및 관리</a>
@@ -19,7 +19,7 @@
             <form enctype="multipart/form-data" method="POST" class="table" action="{% url 'new' %}">
                 {% csrf_token %}
                 {{form|crispy}}
-                <input type="submit" class="btn btn-primary btn-lg btn-block" value="올리기">
+                <input type="submit" class="btn btn-lg btn-block" value="올리기">
             </form>
             <!--</div>-->
         </div>
@@ -43,6 +43,14 @@
 
     .col-lg-9 {
         margin-top: 1rem;
+    }
+    .new{
+        padding: 3rem;
+    }
+    .btn{
+        background-color: #ffeb33;
+        font-size: medium;
+        margin-top: 2rem;
     }
 </style>
 

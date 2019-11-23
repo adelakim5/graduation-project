@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
 
-{% for one in the_customer %}
+{% if error %}
+<br>
+{{ error }}
+<br>
+{% endif %}
 
-{{one.customer}}<br>
-{{one.whose}}<br>
-{{one.reason}}<br>
-{{one.others}}<br>
-{{one.how_many2}}<br>
+
+
+{{customer.customer}}<br>
+{{customer.whose}}<br>
+{{customer.reason}}<br>
+{{customer.others}}<br>
+{{customer.how_many2}}<br>
 <hr>
-{% endfor %}
-<a href="{% url 'manage' %}">돌아가기</a>
+
+<a href="{% url 'manage' customer.pk %}">manage.html</a>
+<a href="{% url 'customer_list' %}">customer_list.html</a>
 {% endblock %}

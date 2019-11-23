@@ -1,71 +1,106 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- {% load crispy_forms_tags %} -->
-
-<div class="message" role="alert">
-  {% if error %}
-  <br>
-  {{ error }}
-  <br>
-  {% endif%}
-</div>
-{% if messages %}
-	{% for message in messages %}
-		{{ message.tags }}
-		{{ message.message }}
-	{% endfor %}
-{% endif %}
-
-
-
-<div class="container">
-  <h1>매장을 등록하고 싶으신가요?</h1>
-  <p>궁동예약에 등록하는 절차는 그리 어렵지 않습니다. 고객분들께 보다 빠르고 편하게 서비스를 제공하고, 보다 쉽게 궁동예약이 주는 편리함을 누려보세요.<br>
-    <strong>※주의사항: 손님으로 사용하고싶은 고객분들은 가입할 수 없습니다. 카카오톡 로그인을 통해 이용해주세요.※</strong></p>
-  <hr>
-  <form action="{% url 'signup' %}" method="POST">
-
-    {% csrf_token %}
-    <label for="username"><b>아이디*</b></label>
-    <input type="text" name="username" required>
-
-    <label for="nickname"><b>닉네임*</b></label>
-    <input type="text" placeholder="어떤 식당인지 잘 느껴지도록 작명하는것을 추천합니다." name="nickname" required>
-
-    <label for="password1"><b>비밀번호*</b></label>
-    <input type="password" placeholder="Enter Password" name="password1" required>
-
-    <label for="password2"><b>비밀번호 확인*</b></label>
-    <input type="password" placeholder="Repeat Password" name="password2" required>
-
-    <label for="first_name"><b>이름</b></label>
-    <input type="text" name="first_name" >
-
-    <label for="last_name"><b>성</b></label>
-    <input type="text" name="last_name" >
-
-    <label for="address"><b>주소*</b></label>
-    <input type="text" name="address" required>
-
-    <label for="bizNumber"><b>사업자등록번호*</b></label>
-    <input type="text" placeholder="정확히 기입해 주세요." name="bizNumber" required>
-
-    <p>*는 필수항목입니다.</p>
-    <hr>
-    <div class="clearfix">
-      <input type="submit" class="btn btn-primary btn-lg btn-block" value="가입하기">
-    </div>
-  </form>
-</div>
-
 
 <style>
+  .profile-form,
+  .profile {
+    padding: 3rem;
+  }
+
+  btn-2 {
+    background-color: #ffeb33;
+  }
+
+
+
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  btn-2:hover {
+    opacity: 1;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+
+  .title {
+    color: grey;
+    margin: 2rem;
+  }
+
+  .btn-5 {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    background-color: #ffeb33;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  .btn-5:hover,
+  a:hover {
+    opacity: 0.7;
+  }
+
+
+  .signup-page {
+    font-weight: bolder;
+  }
+
+  .explanation {
+    padding: 6rem;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+  }
+
+  .btn-6 {
+    background-color: #fee41a;
+    font-size: medium;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+
+  .warning {
+    margin-top: 1rem;
+    width: 100%;
+    background-color: #fee41a;
+    border-radius: 5px;
+    color: black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1rem, 0, 1rem, 0;
+  }
+
+  .warning p {
+    padding: 1rem;
+  }
+
+  .signup-form {
+    padding: 16px;
+    color: black;
+  }
+
+
+  input[type=submit]:hover {
+    opacity: 1;
+  }
+
   input[type=text],
   input[type=password] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
-    display: inline-block;
     border: none;
     background: #f1f1f1;
   }
@@ -75,20 +110,57 @@
     background-color: #ddd;
     outline: none;
   }
-
-  hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-  }
-
-  input[type=submit]:hover {
-    opacity: 1;
-  }
-  .message{
-    text-align: center;
-    color: red;
-    margin-bottom: 50px;
-  }
 </style>
+
+<div class="message" role="alert">
+  {% if error %}
+  <br>
+  {{ error }}
+  <br>
+  {% endif%}
+</div>
+
+<div class="signup-page">
+  <div class="signup-ctnr">
+    <div class="explanation">
+      <h1 style="font-weight: bold;">매장을 등록하고 싶으신가요?</h1>
+      <p>궁동예약에 등록하는 절차는 그리 어렵지 않습니다. <br>고객분들께 보다 빠르고 편하게 서비스를 제공하고, 보다 쉽게 궁동예약이 주는 편리함을 누려보세요.</p><br>
+      <div class="warning">
+        <p>※손님으로 사용하고싶은 고객분들은 카카오톡 로그인을 통해 이용해주세요.※</p>
+      </div>
+    </div>
+    <form action="{% url 'signup' %}" method="POST" class="signup-form">
+
+      {% csrf_token %}
+      <label for="username"><b>아이디*</b></label>
+      <input type="text" name="username" required>
+
+      <label for="nickname"><b>닉네임*</b></label>
+      <input type="text" placeholder="어떤 식당인지 잘 느껴지도록 작명하는것을 추천합니다." name="nickname" required>
+
+      <label for="password1"><b>비밀번호*</b></label>
+      <input type="password" placeholder="Enter Password" name="password1" required>
+
+      <label for="password2"><b>비밀번호 확인*</b></label>
+      <input type="password" placeholder="Repeat Password" name="password2" required>
+
+      <label for="first_name"><b>이름</b></label>
+      <input type="text" name="first_name">
+
+      <label for="last_name"><b>성</b></label>
+      <input type="text" name="last_name">
+
+      <label for="address"><b>주소*</b></label>
+      <input type="text" name="address" required>
+
+      <label for="bizNumber"><b>사업자등록번호*</b></label>
+      <input type="text" placeholder="정확히 기입해 주세요." name="bizNumber" required>
+      <p>*는 필수항목입니다.</p>
+      <div class="clearfix">
+        <input type="submit" class="btn btn-block btn-6" value="가입하기">
+      </div>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

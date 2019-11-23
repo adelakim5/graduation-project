@@ -1,0 +1,141 @@
+#searchBar {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #c0c0c0;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+  }
+
+  title {
+    text-decoration: none;
+  }
+
+  .jumbotron {
+    padding: 6rem;
+    margin-top: 2rem;
+    background-color: #f8f9fa;
+    color: black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .jumbotron-heading {
+    background-color: #ffeb33;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: black;
+    display: inline-block;
+    padding: 1.5rem;
+  }
+
+  .btn-to-detail {
+    background-color: #ffeb33;
+    padding: 1rem, 3rem, 1rem, 3rem;
+  }
+
+  .food {
+    padding-top: 2rem;
+  }
+
+  .a{
+    all: unset;
+    margin-top: 1em;
+    color: white;
+    cursor: pointer;
+  }
+
+
+
+.list-group {
+    margin-top: 1rem;
+}
+
+table {
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+td {
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    padding: 1em;
+}
+
+
+.btn {
+    background-color: #ffeb33;
+    font-size: medium;
+}
+
+
+input {
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+
+th {
+    background-color: #f8f9fa;
+    padding: 1em;
+    font-weight: bold;
+}
+
+.btn-deny, .btn-for-close {
+    background-color: #b4b4b4;
+}
+
+.current,
+.manage,
+.cart,
+.cart-form,
+.edit,
+.detail,
+.past {
+    padding: 3rem;
+}
+
+.btn-kakao {
+    background-color: #ffeb33;
+    margin-top: 2rem;
+    float: right;
+    padding: 1rem;
+}
+
+h4 {
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.col-lg-9 {
+    margin-top: 1rem;
+}
+
+#cmt-none {
+    cursor: unset;
+}
+
+#people,
+#total_price {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.room_for_comment {
+    background-color: whitesmoke;
+    margin-top: 20px;
+}
+
+.comment {
+    padding: 20px;
+}
+
+
+.mt-4 {
+    font-weight: bold;
+}
+

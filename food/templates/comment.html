@@ -2,23 +2,52 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<h3>후기를 남겨주세요.</h3>
-<form method="POST" class="post-form">
-    {% csrf_token %}
-    author: {{ request.user }}
-    {{form|crispy}}
-    <button type="submit" id="review" class="save btn btn-primary" onclick="confrm()">SEND</button>
-</form>
+
+<div class="container comment-pg">
+    <div class="message">
+        <h3>후기를 남겨주세요.</h3>
+        <ul>
+            <li>후기는 실제 이용 후 언제든지 작성 가능합니다.</li>
+            <li>욕설/반말 등은 지양해 주시기 바라며, 욕설/비방글의 경우 경고없이 임의로 삭제될 수 있습니다.</li>
+            <li>개인적으로 전달하고싶은 점/개선사항을 적어주셔도 좋습니다.</li>
+        </ul>
+    </div>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        작성자 아이디: {{ request.user }}
+        {{form|crispy}}
+        <button type="submit" id="review" class="save btn btn-lg" onclick="confrm()">후기 남기기</button>
+    </form>
+</div>
+<style>
+    .btn{
+        background-color: #ffeb33;
+        font-size: medium;
+    }
+    .comment-pg{
+        padding: 6rem;
+        background-color:#f8f9fa;
+    }
+    h3{
+        font-weight: bold;
+        padding: 5px;
+        display: inline;
+    }
+    ul{
+        margin-top: 10px;
+    }
+    
+</style>
 <script>
-        form = doucment.getElementById('review')
+    form = doucment.getElementById('review')
 
-        function confrm() {
-            var result = confirm("후기를 남기시겠습니까?")
-            if (result) {
-                alert('등록되었습니다.')
-                form.submit()
-            }
+    function confrm() {
+        var result = confirm("후기를 남기시겠습니까?")
+        if (result) {
+            alert('등록되었습니다.')
+            form.submit()
         }
-    </script>
+    }
+</script>
 
-{% endblock %} 
+{% endblock %}

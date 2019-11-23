@@ -2,15 +2,6 @@
 <html lang="en">
 
 <head>
-  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-  <script>
-    var OneSignal = window.OneSignal || [];
-    OneSignal.push(function () {
-      OneSignal.init({
-        appId: "28da4565-8248-4583-9054-07f36810059a",
-      });
-    });
-  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -54,40 +45,49 @@
     footer {
       margin-top: 5rem;
     }
+
+    h4{
+      font-weight: bold;
+    }
+
+    #navbarHeader{
+      padding-top: 4rem;
+    }
+
   </style>
 </head>
 
 <body>
   <header>
-    <div class="collapse bg-dark" id="navbarHeader">
+    <div class="collapse bg-light" id="navbarHeader">
       <div class="container">
         <div class="row">
           <div class="col-sm-8 col-md-7 py-4">
-            <h4 class="text-white">궁동예약?</h4>
+            <h4>궁동예약?</h4>
             <p class="text-muted">직접 가지 않고도 쉽고 빠르게 즉시 예약을 할 수 있는 서비스입니다. 원하는 식당을 검색하고 예약을 요청해보세요. 혹시 예약이 불가능 한가요? 직접 가야할
               것 같나요? 그런데 얼마나 기다려야 하는지 모르겠다구요? 걱정마세요, 버튼 하나로 대기 순번을 쉽게 받을 수 있습니다.</p>
           </div>
           <div class="col-sm-4 offset-md-1 py-4">
-            <h4 class="text-white">궁동예약!</h4>
+            <h4>궁동예약!</h4>
             {% if user.is_authenticated %}
             <ul class="list-unstyled">
-              <li><a href="javascript:{document.getElementById('logout').submit()}" class="text-white">로그아웃</a></li>
+              <li><a href="javascript:{document.getElementById('logout').submit()}">로그아웃</a></li>
               <form id="logout" method="POST" action="{% url 'logout' %}">{% csrf_token %}<input type="hidden"></form>
               <!--dropdown추가한 마이페이지-->
               <li class="dropdown">
                 <a href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false" class="text-white dropdown-toggle">My Page</a>
+                  aria-expanded="false" class="dropdown-toggle">My Page</a>
                 <!--dropdown추가한 마이페이지-->
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <a href="{% url 'myCart' %}" class="dropdown-item">My 내역</a>
                   <!-- user가 Profile에 있으면 아래를 부르고, 없으면 아래를 안부르게 만들고 싶다.. -->
                   <a href="{% url 'profile' %}" class="dropdown-item">My 계정</a>
-                  <a href="{%url 'myCustomer'%}" class="dropdown-item">My 고객</a>
-                  <a href="{% url 'new' %}" class="dropdown-item">My 게시글</a>
+                  <a href="{%url 'customer_list' %}" class="dropdown-item">My 고객</a>
+                  <a href="{% url 'myposts' %}" class="dropdown-item">My 게시글</a>
                   <a href="{%url 'requested_cart'%}" class="dropdown-item">My 요청 온 내역</a>
                 </div>
               </li>
-              <li><a href="#" class="text-white">others</a></li>
+              <li><a href="#">이용가이드</a></li>
             </ul>
             {% else %}
             <ul class="list-unstyled">
@@ -95,7 +95,7 @@
               <li>
                 <a href="{% url 'signup' %}">매장을 등록하고 싶으신가요?</a>
               </li>
-              <li><a href="#">others</a></li>
+              <li><a href="#">이용가이드</a></li>
             </ul>
             {% endif %}
             </ul>
@@ -103,14 +103,10 @@
         </div>
       </div>
     </div>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="navbar fixed-top navbar-light bg-light shadow-sm">
       <div class="container d-flex justify-content-between">
         <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
-            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2"
-            viewBox="0 0 24 24" focusable="false">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-            <circle cx="12" cy="13" r="4" /></svg>
+          <img src="https://image.flaticon.com/icons/svg/857/857681.svg" alt="" width="30" height="30">
           <strong>궁동예약</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
@@ -121,10 +117,12 @@
     </div>
   </header>
 
-  <div class="container mt-5">
+  <main>
+    <div class="container mt-5">
     {% block content %}
     {% endblock %}
-  </div>
+    </div>
+  </main>
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">
@@ -135,8 +133,8 @@
 
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+  <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

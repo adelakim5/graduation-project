@@ -24,7 +24,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
+    'text',
     'accounts.apps.AccountsConfig',
     'food.apps.FoodConfig',
     'django.contrib.sites',
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     
 ]
-ASGI_APPLICATION = 'reservation.routing.application'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -62,14 +61,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'reservation.urls'
-# 추가함
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # './templates',
-            os.path.join(BASE_DIR, 'alarms')
+            './templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -78,26 +76,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'cart.context_processors.cart',
                 'django.template.context_processors.request',
             ],
         },
     },
 ]
 
-# redis_host = os.environ.get('REDIS_HOST', 'localhost')
-
-#channel_layers 추가
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-            # 포트 기본값이 6379
-        },
-        # 'ROUTING':'reservation.routing.channel_routing',
-    },
-}
 
 WSGI_APPLICATION = 'reservation.wsgi.application'
 
@@ -182,7 +166,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
-# CART_ID = 1
 
 # django-allauth setting
 LOGIN_REDIRECT_URL = '/'

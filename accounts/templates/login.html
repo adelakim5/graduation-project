@@ -2,20 +2,9 @@
 
 {% load socialaccount %}
 {% providers_media_js %}
-
 {% block content %}
 
 <style>
-  .message {
-    text-align: center;
-    color: red;
-    margin-bottom: 50px;
-  }
-
-  #kakao-login-btn {
-    background-color: #fee100;
-  }
-
   .bg-img {
     background-image: url('https://cdn.pixabay.com/photo/2019/03/14/22/06/seat-4056023_960_720.jpg');
     min-height: 500px;
@@ -24,6 +13,7 @@
     background-size: cover;
     position: relative;
   }
+
 
   .container-form {
     position: absolute;
@@ -60,18 +50,24 @@
 
   #btn-1 {
     background-color: #4e9a9a;
+    color: white;
   }
 
   #kakao-btn {
     background-color: #fee100;
+    color: #400000;
   }
 
   #btn-reg {
     background-color: black;
   }
 
-  p{
+  p {
     text-align: center;
+  }
+
+  .round {
+    border-radius: 50%;
   }
 </style>
 
@@ -87,9 +83,9 @@
   <form action="{% url 'login' %}" method="POST" class="container-form">
     {% csrf_token %}
     <h2>Login</h2>
-   
+
     <input class="id" type="text" name="username" placeholder="아이디를 입력하세요" required>
-   
+
     <input type="password" name="password" placeholder="비밀번호를 입력하세요" required>
     <input class="btn" id="btn-1" type="submit" value="매장계정으로 로그인">
     <hr>

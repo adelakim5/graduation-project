@@ -2,21 +2,10 @@
 
 {% block content %}
 
-결제가 완료되었습니다.
-
-<style>
-    /* input{
-        display: none;
-    } */
-</style>
-<p>{{ user }}</p>
-<form action="{% url 'success' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">확인</button>
-    <!-- 이걸 누르면 매장에게 알람을 보낸다. -->
-</form>
+요청이 완료되었습니다.
+예약은 매장에서 최종 승인 후 진행됩니다. 예약이 완료되면 알림 문자메시지가 발신됩니다. 예약이 정상적으로 이뤄지지 않으면 카카오페이 결제는 자동으로 취소됩니다. 
 
 <br>
-<a href="{% url 'home' %}">홈으로 가기</a>
+<a href="{% url 'home' %}" class="btn">홈으로 가기</a>
 
 {% endblock %}

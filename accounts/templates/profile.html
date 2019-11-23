@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-
-{% if error %}
-<br>
-<br>
-{{ error }}
-<br>
-<br>
-{% endif %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'for_accounts.css' %}">
 
 <style>
     .card {
@@ -18,36 +12,40 @@
         font-family: arial;
     }
 
-    .title {
-        color: grey;
-        margin-top: 8px;
+    .profile {
+        padding: 3rem;
     }
 
-    .btn {
-        border: none;
-        outline: 0;
-        display: inline-block;
-        padding: 8px;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .btn:hover,
-    a:hover {
-        opacity: 0.7;
+    .btn-5 {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    background-color: #ffeb33;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
     }
 </style>
-<h2 style="text-align: center">My Profile</h2>
-<div class="card">
-    <img src="https://cdn.pixabay.com/photo/2017/01/31/09/30/raspberry-2023404_960_720.jpg" alt="plain_photo"
-        style="width: 100%">
-    <h1 class="title">{{ user.profile.nickname}}</h1>
-    <p>궁동예약 입점 완료</p>
 
-    <p><a href="{% url 'profile_detail' %}" class="btn btn-primary">자세히보기</a></p>
+{% if error %}
+<br>
+<br>
+{{ error }}
+<br>
+<br>
+{% endif %}
 
+<div class="profile">
+    <h2 style="text-align: center">My Profile</h2>
+    <div class="card">
+        <img src="https://cdn.pixabay.com/photo/2017/01/31/09/30/raspberry-2023404_960_720.jpg" alt="plain_photo"
+            style="width: 100%">
+        <h1 class="title">{{ user.profile.nickname}}</h1>
+        <p>궁동예약 입점 완료</p>
+        <p><a href="{% url 'profile_detail' %}" class="btn btn-5">자세히보기</a></p>
+    </div>
 </div>
 
 {% endblock %}

@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<!-- 요청내역 -->
-<!-- 매장에서 요청 온 내역을 보는 곳 -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css'%}">
 
 <div class="container">
-    <div class="row">
+    <div class="row current">
         <div class="col-lg-3">
             <h4>현재 요청 내역</h4>
             <div class="list-group">
@@ -15,10 +14,77 @@
         </div>
 
         <div class="col-lg-9">
-            <section class="row align-items-center my-5">
+            <ul>
+                <li>현재 나에게 온 요청 내역을 확인할 수 있습니다.</li>
+                <li>응답을 기다리는 고객님들을 위해 가능한 바로바로 확인(거절/승인)해주세요.</li>
+            </ul>
+            <section class="align-items-center my-5">
                 {% for requests in request_list %}
-                <input type="text" name="cart2_id" value="{{ requests.pk }}" readonly> <br>
-                매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
+                <table>
+                    <tr>
+                        <th>요청번호</th>
+                        <th><input type="text" name="cart2_id" value="{{ requests.pk }}" readonly></th>
+                    </tr>
+                    <tr>
+                        <td>받는사람</td>
+                        <td><input type="number" name="people" value="{{ requests.people }}" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>총 금액</td>
+                        <td><input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원</td>
+                    </tr>
+                    <tr>
+                        <td>가게 이름</td>
+                        <td><input type="text" name="title" value="{{ requests.title }}" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>보낸사람</td>
+                        <td><input type="text" name='sender' , value="{{ requests.sender }}" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>확인</td>
+                        <td>
+                            <form action="{% url 'checkCanceled' requests.order_id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button class="btn btn-deny" type="submit">거절</button>
+                                <!-- <input type="submit" name="deny" class="btn" value="거절"><br> -->
+                            </form>
+                                <button class="btn" type="submit" data-toggle="modal" data-target="#doneModal">승인</button>
+                                <!-- modal -->
+                                <div class="modal" id="doneModal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <!-- modal header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">예약/대기 예정시간 입력</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <!-- modal body -->
+                                                <div class="modal-body">
+                                                    <form action="{% url 'checkDone' requests.order_id %}" method="POST" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <input type="number" name="minute" placeholder="ex. 10분, 30분, 50분">분 <br>
+                                                        <input type="submit" class="btn" value="입력완료">
+                                                    </form>
+                                                </div>
+                                                <!-- modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn" data-dismiss="modal">닫기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                            <!-- <input type="submit" name="ok" class="btn" value="승인"><br> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>일자</td>
+                        <td>{{ requests.request_date }}</td>
+                    </tr>
+                </table>
+                <!-- <input type="text" name="cart2_id" value="{{ requests.pk }}" readonly> <br> -->
+                <!-- 매장계정: <input type="text" name="receiver" value="{{ requests.receiver }}" readonly><br>
                 요청인원: <input type="number" name="people" value="{{ requests.people }}" readonly><br>
                 총금액: <input type="number" name="total_price" value="{{ requests.total_price }}" readonly>원 <br>
                 식당명: <input type="text" name="title" value="{{ requests.title }}" readonly> <br>
@@ -28,18 +94,12 @@
                     {% csrf_token %}
                     <input type="submit" name="ok" id="" value="승인"><br>
                     <input type="submit" name="deny" id="" value="거절"><br>
-                </form>
+                </form> -->
+                <hr>
+                {% endfor %}
             </section>
-            <hr>
-            {% endfor %}
         </div>
     </div>
 </div>
-<style>
-    .list-group {
-        margin-top: 1rem;
-    }
-</style>
-
 
 {% endblock %}

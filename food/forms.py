@@ -26,3 +26,15 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('text', )
 
+class CustomerForm(forms.ModelForm):
+    REASON=[
+        ('no-show', '노쇼'),
+        ('accept', '승인'),
+        ('cancel', '취소'),
+        ('etc', '기타')
+    ]
+    reason = forms.ChoiceField(widget = forms.RadioSelect, choices=REASON, initial='accept', required=True)
+    
+    class Meta:
+        model = Customer
+        fields = ('reason', )

@@ -4,7 +4,7 @@
 
 <!--new.html content -->
 <div class="container">
-    <div class="row">
+    <div class="row retrieve">
         <div class="col-lg-3">
             <h4>게시글 조회 및 관리</h4>
             <div class="list-group">
@@ -26,11 +26,11 @@
                     <h2 class="font-weight-bold">{{ post.title }}</h2>
                     <p>{{ post.description }}<br>(후기: {{post.approved_comments.count}}개)</p>
                     <p>{{ post.price }}원</p>
-                    <a href="{% url 'detail' post.id  %}" class="btn btn-primary">더보기</a>
-                    <a class="btn btn-primary" href="{% url 'edit' post.id %}">수정</a>
-                    <form action="{% url 'delete' post.id %}" id="food-delete" method="POST" style="float: right;">
+                    <a href="{% url 'detail' post.id  %}" class="btn btn-block">더보기</a>
+                    <a class="btn btn-block" href="{% url 'edit' post.id %}">수정하기</a>
+                    <form action="{% url 'delete' post.id %}" id="food-delete" method="POST">
                         {% csrf_token %}
-                        <input type="submit" class="btn btn-default" onclick="confrm()" value="삭제">
+                        <input type="submit" class="btn btn-block" style="background-color: whitesmoke; margin-top: 8px;" onclick="confrm()" value="삭제하기">
                     </form>
                     <script>
                         form = doucment.getElementById('food-delete')
@@ -67,9 +67,16 @@
         font-weight: bold;
     }
 
-    .col-lg-9,
-    .btn {
+    .col-lg-9{
         margin-top: 1rem;
+    }
+
+    .btn{
+        background-color: #ffeb33;
+    }
+
+    .retrieve{
+        padding: 3rem;
     }
 </style>
 {% endblock %}

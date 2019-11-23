@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if Profile %}
+
+<a href="{% url 'new' %}">new</a>
+<a href="{% url 'customer_list' %}">customer_list</a>
+
+{% else %}
+
+<a href="{% url 'myCart' %}">myCart</a>
+
+{% endif %}
+
+
+{% endblock %}
