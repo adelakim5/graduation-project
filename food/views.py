@@ -357,7 +357,9 @@ def checkCanceled(request, cart2_id):
 def checkDone(request, cart2_id):
     cart2_detail = get_object_or_404(Cart2, order_id=cart2_id)
     if request.method == 'POST':
-      
+        api_key = "NCSMT6MABSKAUNEP"
+        api_secret = "KRXVXII9XJ7NNQ2APASDXT9MEZNGYX1K"
+    
         minute = request.POST['minute']
         
         params = dict()
