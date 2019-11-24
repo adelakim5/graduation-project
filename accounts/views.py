@@ -1,21 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth, messages
 from django.contrib.auth.models import User, Group
-# from django.contrib.contenttypes.models import ContentType
-# from django.contrib.auth.views import LoginView as auth_login
-# from allauth.socialaccount.models import SocialApp
-# from allauth.socialaccount.templatetags.socialaccount import get_providers
 from food.models import Food
 from django.views import View
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import Profile
-# from django import template
 
-# register = template.Library()
-# @register.filter(name='has_group')
-# def has_group(user, group_name):
-#     return user.groups.filter(name=profile_user).exists()
 
 def signup(request):
     if request.method == 'POST':
@@ -48,7 +39,11 @@ def user_delete(request):
 
 def update_profile(request):
     profile = Profile.objects.get(user=request.user)
+    user = request.user
     if request.method == 'POST':
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.save()
         profile.nickname = request.POST['nickname']
         profile.address = request.POST['address']
         profile.bizNumber = request.POST['bizNumber']
@@ -86,7 +81,7 @@ def logout(request):
 
 def socialLogin(request):
    login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
-   client_id = 'a1b93304238ae08e26b2f453e90b8481'
+   
    redirect_uri = 'http://localhost:8000/accounts/oauth'
    login_request_uri += 'client_id=' + client_id
    login_request_uri += '&redirect_uri=' + redirect_uri
@@ -112,20 +107,6 @@ def oauth(request):
     
     return redirect('home')
 
-   
-# def friends(request):
-#     if request.method == 'POST':
-#         Authorization = 'KakaoAK ' + '1003f4e4429fec7aca912b2c74e0f659'
-#         push_url = 'https://kapi.kakao.com/v1/push/register'
-#         push_url += "Authorization: "+Authorization
-#         push_url += "uuid=" + str(User.objects.get(username=request.user).pk)
-#         push_url += "&device_id=" + "0f365b39-c33d-39be-bdfc-74aaf553447"
-#         push_url += "&push_type=" + "gcm"
-#         push_url += "push_token=" + "BLTwLkIR7wbADh0ef0Geri794RrmaPGGQQe7VLXLXIJYeo_0zieE6qx264UIX9WfwPriQnbUBbeOpcpquny-tHM"
-        
-#         print(push_url)
-#         return redirect(push_url)
-    
-    # return render(request, 'hello.html')
+
     
     

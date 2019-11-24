@@ -4,11 +4,17 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css'%}">
 
-{% if error %}
-<br>
-{{ error }}
-<br>
-{% endif %}
+<style>
+    .error-message {
+        background-color: #bbffdd;
+        width: 100%;
+        height: 5rem;
+        padding: 20px;
+        font-weight: bolder;
+        border: 1px solid #00ff80;
+        border-radius: 5px;
+    }
+</style>
 
 <!-- 요청내역 -->
 <!-- 매장에서 요청 온 내역을 보는 곳 -->
@@ -16,11 +22,7 @@
 {% for message in messages %}
 <br>
 <br>
-<div style="background-color: #a4ffa4; 
-width: 100%; 
-height:5rem;
-padding:20px;
-font-weight: bolder;">
+<div class="error-message">
     {{ message.tags }}
     {{ message.message }}
 </div>

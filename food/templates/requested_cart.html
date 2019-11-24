@@ -17,8 +17,8 @@
             <ul>
                 <li>현재 나에게 온 요청 내역을 확인할 수 있습니다.</li>
                 <li>응답을 기다리는 고객님들을 위해 가능한 바로바로 <strong>확인(거절 / 승인)</strong>해주세요.</li>
-                <li>결제상태는 <strong>(1: 완료 / -1: 실패)</strong>로 표기됩니다. </li>
-                <li>만약 "-1" 이라면, 결제가 실패한 상태이므로 거절버튼을 누르십시오.</li>
+                <li>결제상태는 <strong>(1: 완료 / 0:진행중 / -1: 실패)</strong>로 표기됩니다. </li>
+                <li>만약 "-1" 또는 "0" 이라면, 결제가 제대로 되지 않은 상태이므로 거절버튼을 누르십시오.</li>
                 <li>확인을 마친 내역은 <strong>지난 요청 내역</strong>에서 확인할 수 있습니다.</li>
             </ul>
             <section class="align-items-center my-5">
@@ -87,12 +87,12 @@
                                                 {% csrf_token %}
                                                 <input type="number" name="minute" placeholder="ex. 10분, 30분, 50분">분
                                                 <br>
-                                                <input type="submit" class="btn" value="입력완료">
+                                                <input style="margin-top: 2rem" type="submit" class="btn" value="입력완료">
                                             </form>
                                         </div>
                                         <!-- modal footer -->
                                         <div class="modal-footer">
-                                            <button type="button" class="btn" data-dismiss="modal">닫기</button>
+                                            <button type="button" class="btn btn-for-close" data-dismiss="modal">닫기</button>
                                         </div>
                                     </div>
                                 </div>

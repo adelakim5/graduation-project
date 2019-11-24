@@ -57,7 +57,6 @@ def undo(request):
 # 고객의 장바구니
 def myCart(request):
     request_list = Cart.objects.all().filter(sender=request.user)
-    # print(type(request_list))
     return render(request, 'myCart.html', {'request_list':request_list})
 
 # 매장이 보는 나의 요청온내역 
@@ -185,7 +184,7 @@ def cart(request, food_id):
 def successPage(request):
     access_token = SocialToken.objects.get(account__user=request.user, account__provider="kakao").token
     pg_token = request.GET['pg_token']
-    # print("@@@@@@@@@@@@@@@@@@@@@@@@ pg_token : {} , ".format(pg_token))
+    
     cart2 = Cart2.objects.get(sender=request.user)
     if request.method == 'POST':
         return render(request, 'ordering.html')
@@ -202,7 +201,7 @@ def successPage(request):
         "tid": cart2.tid
     }
     res = requests.post(URL,headers=headers,data=data)
-    # print("@@@@@@ {} @@@@@@@@@@@ {}".format(res.status_code, cart2.status))
+    
     if res.status_code == 200:
         cart2 = Cart2.objects.get(sender=request.user)
         cart2.status = "1"
@@ -214,24 +213,8 @@ def successPage(request):
         cart2.save()
         return redirect('fail')
 
-# 결제준비가 된 고객의 주문을 매장이 볼 수 있도록 cart2모델에 저장하기 
-# def successCart(request, cart_id):
-#     cart_detail = get_object_or_404(Cart, pk=cart_id)
-#     if request.method == 'POST':
-#         sender = cart_detail.sender
-#         receiver = cart_detail.receiver
-#         people = cart_detail.people
-#         total_price = cart_detail.total_price
-#         request_date = timezone.now()
-#         title = cart_detail.title
-#         phone = cart_detail.phone
-#         cart2 = Cart2(sender=sender, receiver=receiver, people=people, total_price=total_price, request_date=request_date, title=title,phone=phone)
-#         cart2.save()
-#         # 그럼 이제 cart는 삭제
-#         cart_detail.delete()
-#         return redirect('home')
-#     else:
-#         return render(request, 'ordering.html', {'cart':cart_detail})
+def guide(request):
+    return render(request, 'guide.html')
 
 # 매장 글 등록
 def foodpost(request):
@@ -319,7 +302,7 @@ def checkplz(request):
         'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
     }
     res = requests.post(URL,headers=headers,data=data)
-    # 받아온 데이터를 Json => Dict으로 바꿈.(파이썬에서 사용 가능하게)
+    
     if res.status_code == 200:
         resp = json.loads(res.text)
         cart2 = Cart2(
@@ -329,7 +312,6 @@ def checkplz(request):
         cart2.save()
         cart = Cart.objects.all().filter(sender=request.user).filter(receiver=partner_user_id)
         cart.delete()
-        # print("@@@@@@@@@@@ order id = {} , tid = {}".format(partner_order_id , resp['tid']))
         return redirect(resp['next_redirect_pc_url'])
     else:
         return redirect('fail')
@@ -375,8 +357,7 @@ def checkCanceled(request, cart2_id):
 def checkDone(request, cart2_id):
     cart2_detail = get_object_or_404(Cart2, order_id=cart2_id)
     if request.method == 'POST':
-        api_key = "NCSMT6MABSKAUNEP"
-        api_secret = "KRXVXII9XJ7NNQ2APASDXT9MEZNGYX1K"
+      
         minute = request.POST['minute']
         
         params = dict()
@@ -412,7 +393,6 @@ def checkDone(request, cart2_id):
         cart3.save()
         cart_of_sender = cart2_detail
         cart_of_sender.delete()
-        cart2_detail.delete()
         return redirect('past')
     
         sys.exit()

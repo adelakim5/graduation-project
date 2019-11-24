@@ -4,7 +4,7 @@ from django.db.models import QuerySet
 from django.conf import settings
 from django.utils import timezone
 from accounts.models import Profile
-# from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.validators import MinValueValidator
 

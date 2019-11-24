@@ -9,6 +9,7 @@ from text import views as text
 # from cart import views 
 
 urlpatterns = [
+    path('guide', food.views.guide, name="guide"),
     path('stream/', food.views.stream, name='stream'),
     # accounts.views 
     path('localaccounts/', include('accounts.urls')),
