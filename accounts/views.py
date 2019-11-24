@@ -23,7 +23,7 @@ def signup(request):
                 bizNumber = request.POST['bizNumber']
                 profile = Profile(user=user, nickname=nickname, address=address, bizNumber=bizNumber)
                 profile.save()
-                auth.login(request, user)
+                auth.login(request, user,backend="django.contrib.auth.backends.ModelBackend")
                 messages.success(request, '가입되었습니다.')
                 return redirect('home')
     return render(request, 'signup.html')
