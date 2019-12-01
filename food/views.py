@@ -181,10 +181,7 @@ def cart(request, food_id):
 def successPage(request):
     access_token = SocialToken.objects.get(account__user=request.user, account__provider="kakao").token
     pg_token = request.GET['pg_token']
-    
     cart2 = Cart2.objects.get(sender=request.user)
-    if request.method == 'POST':
-        return render(request, 'ordering.html')
     URL = 'https://kapi.kakao.com/v1/payment/approve'
     headers = {
         'Authorization': 'Bearer ' + str(access_token),
@@ -265,20 +262,24 @@ def cancel(request, cart_id):
     cancel_cart = get_object_or_404(Cart, pk=cart_id)
     if request.method == 'POST':
         cancel_cart.delete()
-        return redirect('myCart')
-    
+    return redirect('home')
 
-# 결제 준비 
 @login_required
 def checkplz(request):
     access_token = SocialToken.objects.get(account__user=request.user, account__provider="kakao").token
     print(access_token)
     partner_user_id = Profile.objects.get(nickname=request.POST['receiver'])
+    print(partner_user_id)
     quantity = request.POST['people']
+    print(quantity)
     total_amount = request.POST['total_price']
+    print(total_amount)
     item_name = Food.objects.get(title=request.POST['title'])
+    print(item_name)
     partner_order_id = Cart.objects.get(id=request.POST['cart_id']).id
+    print(partner_order_id)
     phone_number = request.POST['phoneNumber']
+    print(phone_number)
     data = {
         "cid": "TC0ONETIME",
         "partner_order_id": partner_order_id,
@@ -299,7 +300,8 @@ def checkplz(request):
         'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
     }
     res = requests.post(URL,headers=headers,data=data)
-    
+    print(res.status_code)
+    # 받아온 데이터를 Json => Dict으로 바꿈.(파이썬에서 사용 가능하게)
     if res.status_code == 200:
         resp = json.loads(res.text)
         cart2 = Cart2(
@@ -309,6 +311,7 @@ def checkplz(request):
         cart2.save()
         cart = Cart.objects.all().filter(sender=request.user).filter(receiver=partner_user_id)
         cart.delete()
+        # print("@@@@@@@@@@@ order id = {} , tid = {}".format(partner_order_id , resp['tid']))
         return redirect(resp['next_redirect_pc_url'])
     else:
         return redirect('fail')
