@@ -288,9 +288,9 @@ def checkplz(request):
         "total_amount": total_amount,
         "vat_amount": 0,
         "tax_free_amount": 0,
-        "approval_url": "https://powerful-sierra-07188.herokuapp.com/success/",
-        "fail_url": "https://powerful-sierra-07188.herokuapp.com/fail",
-        "cancel_url": "https://powerful-sierra-07188.herokuapp.com/fail"   
+        "approval_url": "https://reservegd.herokuapp.com/success/",
+        "fail_url": "https://reservegd.herokuapp.com/fail",
+        "cancel_url": "https://reservegd.herokuapp.com/fail"   
     }
     URL = 'https://kapi.kakao.com/v1/payment/ready'
     ## http header를 보내는데, 여기에 Content-Type이나 권한인증을 위한 Token
