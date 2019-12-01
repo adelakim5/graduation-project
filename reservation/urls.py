@@ -20,7 +20,7 @@ urlpatterns = [
     path('requested_cart/', food.views.requested_cart, name="requested_cart"),
     path('admin/', admin.site.urls),
     path('', food.views.home, name="home"),
-    path('undo/', food.views.undo, name="undo"),
+    # path('undo/', food.views.undo, name="undo"),
     path('<int:food_id>/', food.views.detail, name="detail"), 
     # allauth.url 추가시키는거 재확인 요망 
     path('accounts/', include('allauth.urls')),

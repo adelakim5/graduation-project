@@ -19,11 +19,10 @@ def signup(request):
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'], first_name=request.POST['first_name'], last_name=request.POST['last_name'])
                 user.has_perm('profile_status')
                 nickname = request.POST['nickname']
-                address = request.POST['address']
                 bizNumber = request.POST['bizNumber']
-                profile = Profile(user=user, nickname=nickname, address=address, bizNumber=bizNumber)
+                profile = Profile(user=user, nickname=nickname, bizNumber=bizNumber)
                 profile.save()
-                auth.login(request, user)
+                auth.login(request, user,backend="django.contrib.auth.backends.ModelBackend")
                 messages.success(request, '가입되었습니다.')
                 return redirect('home')
     return render(request, 'signup.html')
@@ -45,7 +44,6 @@ def update_profile(request):
         user.last_name = request.POST['last_name']
         user.save()
         profile.nickname = request.POST['nickname']
-        profile.address = request.POST['address']
         profile.bizNumber = request.POST['bizNumber']
         profile.save()
         return redirect('profile_detail')

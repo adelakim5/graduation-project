@@ -69,12 +69,10 @@
                     <tr>
                         <td>요청인</td>
                         <td>
-                            <!-- <input type="number" name="how_many" value={{p.sender.count}} readonly> -->
                             <input type="text" name="sender" value="{{p.sender}}" readonly>
-                            <button type="button" class="btn" data-toggle="modal" data-target="#myModal">고객등록</button>
-                            <!-- <input type="submit" class="btn" value="고객등록"> -->
+                            <button type="button" class="btn" data-toggle="modal" data-target="#{{p.sender}}">고객등록</button>
                             <!-- modal -->
-                            <div class="modal" id="myModal">
+                            <div class="modal" id="{{p.sender}}}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <!-- modal header -->

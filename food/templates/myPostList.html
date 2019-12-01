@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-lg-5">
                     <h2 class="font-weight-bold">{{ post.title }}</h2>
-                    <p>{{ post.description }}<br>(후기: {{post.approved_comments.count}}개)</p>
+                    <p>{{ post.description }}<br>(후기: {{post.comments.count}}개)</p>
                     <p>{{ post.price }}원</p>
                     <a href="{% url 'detail' post.id  %}" class="btn btn-block">더보기</a>
                     <a class="btn btn-block" href="{% url 'edit' post.id %}">수정하기</a>

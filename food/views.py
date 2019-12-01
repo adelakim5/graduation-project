@@ -50,9 +50,6 @@ def home(request):
     posts = paginator.get_page(page)
     return render(request, 'home.html', {'foods':foods, 'posts':posts})
 
-def undo(request):
-    profile = Profile.objects.all()
-    return render(request, 'undo.html', {'Profile':profile})
 
 # 고객의 장바구니
 def myCart(request):
@@ -159,9 +156,9 @@ def add_comment_to_food(request, food_id):
             comment.post = food_detail
             comment.save()
             return redirect('detail', food_id=food_id)
-        else:
-            form = CommentForm()
-        return render(request, 'comment.html', {'form':form})
+    else:
+        form = CommentForm()
+    return render(request, 'comment.html', {'form':form})
 
 # 요청: 장바구니에 담는 과정 
 @login_required

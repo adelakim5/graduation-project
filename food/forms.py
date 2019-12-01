@@ -14,10 +14,11 @@ class FoodPost(forms.ModelForm):
     description = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'간단한 소개글 한 줄 적어주세요.'}))
     price = forms.IntegerField(min_value=0,widget=forms.NumberInput(attrs={'placeholder':'1인당 최소요청금액을 정해주세요.'}))
     body =  forms.CharField(widget=forms.Textarea(attrs={'placeholder':'식당 정보, 예약시간, 예약금액 등 상세정보를 적어주세요.'}))
+    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '매장 주소를 상세히 적어주세요.'}))
 
     class Meta:
         model = Food
-        fields = ('title','image','category','category2','description','price','body', )
+        fields = ('title','image','category','category2','description','price','body', 'address', )
         
 
 class CommentForm(forms.ModelForm):

@@ -9,7 +9,7 @@
             <!--title-->
             <h1 class="mt-4">{{ food.title }}</h1>
             <!--date/time, author-->
-            <p style="float: left;">작성자: {{ food.author }}
+            <p style="float: left;">작성자: {{ food.author }}({{food.author.user}})
             </p>
             <p style="float: right;">마지막 게시일: {{ food.pub_date }}</p>
             <!--image-->
@@ -23,7 +23,7 @@
             <h4> 최소요청금액(1인 기준): {{ food.price }}원 </h4>
             <p>{{ food.body }}</p>
             <hr>
-            <p>주소: {{food.author.address}}</p>
+            <p>주소: {{food.address}}</p>
         </div>
 
         <!--sideBar widgets column-->

@@ -19,6 +19,7 @@ class Food(models.Model):
     category2 = models.CharField(max_length=10, null=True, default='', blank=True)
     price = models.PositiveIntegerField(default=0)
     body = models.TextField()
+    address = models.CharField(max_length=100, default='')
     author = models.ForeignKey('accounts.Profile', default=1, on_delete=models.CASCADE)
 
     
