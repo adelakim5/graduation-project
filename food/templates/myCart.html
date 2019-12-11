@@ -52,18 +52,20 @@
                     <input type="submit" class="btn btn-kakao" value="카카오페이로 결제하기">
                 </form>
 
+                <!-- <a href="{% url 'cancel' requests.pk %}" id="cancel" class="btn" onclick="confrm()" style="padding:1rem; margin-top: 2rem;">취소하고 돌아가기</a> -->
+ 
                 <form action="{% url 'cancel' requests.pk %}" method="POST" id="cancel">
                     {% csrf_token %}
-                    <input type="submit" value="취소하고 돌아가기" class="btn btn-deny" onclick="confrm()" style="padding:1rem; margin-top: 2rem;">
-                </form>
+                    <input type="button" value="취소하고 돌아가기" class="btn btn-deny" onclick="confrm()" style="padding:1rem; margin-top: 2rem;">
+                </form> 
                 <script>
                     form = doucment.getElementById('cancel')
                     function confrm() {
                         var result = confirm("페이지를 벗어나면 현재 장바구니에 담긴 내용은 사라집니다. 계속하시겠습니까?")
-                        if (result) {
+                        if (result==true) {
                             form.submit()
-                        } else {
-                            alert('취소되었습니다')
+                        } else{
+                            return
                         }
                     }
                 </script>

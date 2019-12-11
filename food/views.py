@@ -220,7 +220,7 @@ def foodpost(request):
             post.author = the_author
             post.pub_date=timezone.now()
             post.save()
-            return redirect('home')
+            return redirect('myposts')
     else:
         form = FoodPost()
     return render(request,'new.html', {'form':form})
@@ -257,12 +257,15 @@ def delete(request, food_id):
         deleted_food.delete()
         return redirect('myposts')
 
-#고객의 장바구니 --> 고객이 취소하고 돌아가기 누를 때  
+# 고객의 장바구니 --> 고객이 취소하고 돌아가기 누를 때  
 def cancel(request, cart_id):
     cancel_cart = get_object_or_404(Cart, pk=cart_id)
     if request.method == 'POST':
         cancel_cart.delete()
-    return redirect('home')
+        return redirect('home')
+
+    
+
 
 @login_required
 def checkplz(request):
@@ -289,9 +292,9 @@ def checkplz(request):
         "total_amount": total_amount,
         "vat_amount": 0,
         "tax_free_amount": 0,
-        "approval_url": "https://reservegd.herokuapp.com/success/",
-        "fail_url": "https://reservegd.herokuapp.com/fail",
-        "cancel_url": "https://reservegd.herokuapp.com/fail"   
+        "approval_url": "https://localhost:8000/success/",
+        "fail_url": "https://localhost:8000/fail",
+        "cancel_url": "https://localhost:8000/fail"   
     }
     URL = 'https://kapi.kakao.com/v1/payment/ready'
     ## http header를 보내는데, 여기에 Content-Type이나 권한인증을 위한 Token

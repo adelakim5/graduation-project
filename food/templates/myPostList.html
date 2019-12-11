@@ -30,16 +30,18 @@
                     <a class="btn btn-block" href="{% url 'edit' post.id %}">수정하기</a>
                     <form action="{% url 'delete' post.id %}" id="food-delete" method="POST">
                         {% csrf_token %}
-                        <input type="submit" class="btn btn-block" style="background-color: whitesmoke; margin-top: 8px;" onclick="confrm()" value="삭제하기">
+                        <input type="button" class="btn btn-block" style="background-color: whitesmoke; margin-top: 8px;" onclick="confrm()" value="삭제하기">
                     </form>
                     <script>
                         form = doucment.getElementById('food-delete')
 
                         function confrm() {
                             var result = confirm("정말로 삭제하시겠습니까?")
-                            if (result) {
+                            if (result == true) {
                                 alert('삭제되었습니다.')
                                 form.submit()
+                            } else {
+                                return;
                             }
                         }
                     </script>
