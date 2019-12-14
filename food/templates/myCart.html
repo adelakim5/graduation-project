@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static%}
+{% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 
 <div>
@@ -59,7 +59,7 @@
                     <input type="button" value="취소하고 돌아가기" class="btn btn-deny" onclick="confrm()" style="padding:1rem; margin-top: 2rem;">
                 </form> 
                 <script>
-                    form = doucment.getElementById('cancel')
+                    const form = document.getElementById('cancel')
                     function confrm() {
                         var result = confirm("페이지를 벗어나면 현재 장바구니에 담긴 내용은 사라집니다. 계속하시겠습니까?")
                         if (result==true) {

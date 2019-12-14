@@ -80,7 +80,7 @@ def logout(request):
 def socialLogin(request):
    login_request_uri = 'https://kauth.kakao.com/oauth/authorize?'
    client_id = 'a1b93304238ae08e26b2f453e90b8481'
-   redirect_uri = 'https://localhost:8000/accounts/oauth'
+   redirect_uri = 'https://reservegd.herokuapp.com/accounts/oauth'
    login_request_uri += 'client_id=' + client_id
    login_request_uri += '&redirect_uri=' + redirect_uri
    login_request_uri += '&response_type=code'
