@@ -65,10 +65,12 @@
                     <tr>
                         <td>고객등록사항</td>
                         <td>{% if messages %}
-                            {% for message in messages %}
-                            {{ message.tags }}
-                            {{ message.message }}
-                            {% endfor %}
+                                {% for message in messages %}
+                                    {% if message.tag == "info" %}
+                                        {{ message.tags }}
+                                        {{ message.message }}
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}</td>
                     </tr>
                     <tr>
@@ -104,13 +106,26 @@
                                         </div>
                                         <!-- modal body -->
                                         <div class="modal-body">
-                                            <form action="{% url 'checkDone' requests.order_id %}" method="POST"
+                                            <!-- {% url 'checkDone' requests.order_id %} -->
+                                            <form id="waitForm" action="{% url 'checkDone' requests.order_id %}" method="POST"
                                                 enctype="multipart/form-data">
                                                 {% csrf_token %}
-                                                <input type="number" name="minute" placeholder="ex. 10분, 30분, 50분">분
+                                                <input id="minuteWait" type="number" name="minute" placeholder="ex. 10분, 30분, 50분">분
                                                 <br>
-                                                <input style="margin-top: 2rem" type="submit" class="btn" value="입력완료">
                                             </form>
+                                            <button id="checkdoneBtn" style="margin-top: 2rem" class="btn">입력완료</button>
+                                            <script>
+                                                const checkdoneBtn = document.getElementById('checkdoneBtn')
+                                                const minuteWait = document.getElementById('minuteWait')
+                                                const waitForm = document.getElementById('waitForm')
+                                                checkdoneBtn.addEventListener('click',()=>{
+                                                    if(minuteWait.value == ''){
+                                                        alert('대기 시간을 입력해주세요!!')
+                                                    }else{
+                                                        waitForm.submit()
+                                                    }
+                                                })
+                                            </script>
                                         </div>
                                         <!-- modal footer -->
                                         <div class="modal-footer">

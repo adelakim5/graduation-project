@@ -21,7 +21,10 @@ from sdk.api.message import Message
 from sdk.exceptions import CoolsmsException
 # stream
 from django.http import HttpResponse
+from myurl import Url
 
+isLocal = Url(False).getUrl()
+    
 def stream(request):
     # return HttpResponse(
     #     'data: hi\n\n',
@@ -142,7 +145,8 @@ def post_retrieve(request):
 # 더보기 
 def detail(request, food_id):
     food_detail = get_object_or_404(Food, pk=food_id)
-    return render(request, 'detail.html', {'food':food_detail})
+    pastCart = ('true' if Cart2.objects.all().filter(sender=request.user) else 'false')
+    return render(request, 'detail.html', {'food':food_detail,'past_cart':pastCart})
 
 # 후기
 @login_required
@@ -165,15 +169,31 @@ def add_comment_to_food(request, food_id):
 def cart(request, food_id):
     food_detail = get_object_or_404(Food, pk=food_id)
     if request.method == 'POST':
-        people = request.POST['people']
-        total_price = request.POST['total_price']
-        sender = request.user
-        receiver = food_detail.author
-        the_title = Food.objects.get(title=food_detail.title)
-        phone = request.POST['phoneNum']
-        cart = Cart(sender=request.user, people=people, total_price=total_price, receiver=receiver, title=the_title,phone=phone)
-        cart.save()
-        return redirect('myCart')
+        if Cart.objects.all().filter(sender=request.user).count() != 0:
+            print(True)
+            cartlist = Cart.objects.all().filter(sender=request.user)
+            print(cartlist)
+            cartlist.delete()
+            people = request.POST['people']
+            total_price = request.POST['total_price']
+            sender = request.user
+            receiver = food_detail.author
+            the_title = Food.objects.get(title=food_detail.title)
+            phone = request.POST['phoneNum']
+            cart = Cart(sender=request.user, people=people, total_price=total_price, receiver=receiver, title=the_title,phone=phone)
+            cart.save()
+            return redirect('myCart')
+        else: 
+            print(False)
+            people = request.POST['people']
+            total_price = request.POST['total_price']
+            sender = request.user
+            receiver = food_detail.author
+            the_title = Food.objects.get(title=food_detail.title)
+            phone = request.POST['phoneNum']
+            cart = Cart(sender=request.user, people=people, total_price=total_price, receiver=receiver, title=the_title,phone=phone)
+            cart.save()
+            return redirect('myCart')
     return render(request, 'detail.html', {'error':'요청실패', 'food':food_detail})
 
 
@@ -292,9 +312,9 @@ def checkplz(request):
         "total_amount": total_amount,
         "vat_amount": 0,
         "tax_free_amount": 0,
-        "approval_url": "https://reservegd.herokuapp.com/success/",
-        "fail_url": "https://reservegd.herokuapp.com/fail",
-        "cancel_url": "https://reservegd.herokuapp.com/fail"   
+        "approval_url": "%s/success/" % isLocal,
+        "fail_url": "%s/fail" % isLocal,
+        "cancel_url": "%s/fail" % isLocal   
     }
     URL = 'https://kapi.kakao.com/v1/payment/ready'
     ## http header를 보내는데, 여기에 Content-Type이나 권한인증을 위한 Token
