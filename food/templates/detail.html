@@ -58,7 +58,7 @@
                     <form class="form-inline" id="reservation" method="POST" action="{% url 'cart' food.id %}">
                         {% csrf_token %}
                         <input type="number" name="people" class="form-control" id="people" placeholder="인원 수를 적어주세요"
-                            min=1 required autofocus>
+                            min=1 required autofocus value="1">
                         <input type="number" name="total_price" class="form-control" id="total_price" placeholder="총 금액"
                             readonly>
                         <input type="text" name="phoneNum" id="phoneNum" hidden>
