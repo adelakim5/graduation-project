@@ -56,22 +56,22 @@
                     </tr> -->
                     <tr>
                         <td>보낸사람</td>
-                        <form action="{% url 'checking' %}" method="POST">
+                        <td>{{ requests.sender }}</td>
+                        <!-- <form action="" method="POST">
                             {% csrf_token %}
                             <td><input type="text" name='sender' , value="{{ requests.sender }}" readonly>
                                 <input type="submit" class="btn" value="등록여부확인"></td>
-                        </form>
+                        </form> -->
                     </tr>
                     <tr>
                         <td>고객등록사항</td>
-                        <td>{% if messages %}
-                                {% for message in messages %}
-                                    {% if message.tag == "info" %}
-                                        {{ message.tags }}
-                                        {{ message.message }}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}</td>
+                        <td>
+                            {% for customer in customer_list %}
+                                {% if requests.sender.username == customer.customer.username %}
+                                    {{ customer.reason }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                     </tr>
                     <tr>
                         <td>총 금액</td>

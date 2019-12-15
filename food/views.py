@@ -63,25 +63,29 @@ def myCart(request):
 def requested_cart(request):
     the_receiver = Profile.objects.get(user=request.user)
     requested_list = Cart2.objects.all().filter(receiver=the_receiver)
-    return render(request, 'requested_cart.html', {'request_list':requested_list})
+    customer_list = []
+    for customer in requested_list:
+        customer_list.append(Customer.objects.get(customer=User.objects.get(username=customer.sender)))
+    
+    return render(request, 'requested_cart.html', {'request_list':requested_list,'customer_list':customer_list})
 
 # 고객 등록 확인 
-def checking(request):
-    me = Profile.objects.get(user=request.user)
-    if request.method == 'POST':
-        user_name = User.objects.get(username=request.POST['sender'])
-        the_customer = Customer.objects.all().filter(whose=me).filter(customer=user_name)
-        if the_customer.filter(reason__exact='no-show'):
-            messages.add_message(request, messages.INFO, '노쇼')
-        elif the_customer.filter(reason__exact='cancel'):
-            messages.add_message(request, messages.INFO, '취소')
-        elif the_customer.filter(reason__exact='accept'):
-            messages.add_message(request, messages.INFO, '승인')
-        elif the_customer.filter(reason__exact='etc'):
-            messages.add_message(request, messages.INFO, '기타')     
-        else:
-            messages.add_message(request, messages.INFO, '없음')
-    return redirect('requested_cart')
+# def checking(request):
+#     me = Profile.objects.get(user=request.user)
+#     if request.method == 'POST':
+#         user_name = User.objects.get(username=request.POST['sender'])
+#         the_customer = Customer.objects.all().filter(whose=me).filter(customer=user_name)
+#         if the_customer.filter(reason__exact='no-show'):
+#             messages.add_message(request, messages.INFO, '노쇼')
+#         elif the_customer.filter(reason__exact='cancel'):
+#             messages.add_message(request, messages.INFO, '취소')
+#         elif the_customer.filter(reason__exact='accept'):
+#             messages.add_message(request, messages.INFO, '승인')
+#         elif the_customer.filter(reason__exact='etc'):
+#             messages.add_message(request, messages.INFO, '기타')     
+#         else:
+#             messages.add_message(request, messages.INFO, '없음')
+#     return redirect('requested_cart')
     
         
 
