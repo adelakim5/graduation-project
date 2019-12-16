@@ -149,8 +149,11 @@ def post_retrieve(request):
 # 더보기 
 def detail(request, food_id):
     food_detail = get_object_or_404(Food, pk=food_id)
-    pastCart = ('true' if Cart2.objects.all().filter(sender=request.user) else 'false')
-    return render(request, 'detail.html', {'food':food_detail,'past_cart':pastCart})
+    print(request.user)
+    if request.user.is_authenticated:
+        pastCart = ('true' if Cart2.objects.all().filter(sender=request.user) else 'false')
+        return render(request, 'detail.html', {'food':food_detail,'past_cart':pastCart})
+    return render(request, 'detail.html', {'food':food_detail })
 
 # 후기
 @login_required

@@ -51,6 +51,7 @@
                 })
             </script>
             <!--side widget-->
+            {% if user.is_authenticated %}
             <div class="card my-4">
                 <h5 class="card-header">요청</h5>
                 <div class="card-body">
@@ -65,10 +66,12 @@
                         <script>
                             let total_price_input = document.getElementById('total_price')
                             let people = document.getElementById('people')
+                            let limit = {{food.price}};
+                            total_price_input.value = parseInt(people.value) * limit
+
                             let form = document.getElementById('reservation')
                             // console.log(total_price_input)
                             // console.log(people)
-                            let limit = {{food.price}};
                             let past = {{past_cart}}
                             people.addEventListener('change', () => {
                                 cal()
@@ -99,6 +102,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 
