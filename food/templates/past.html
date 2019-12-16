@@ -20,12 +20,12 @@
 <!-- 매장에서 요청 온 내역을 보는 곳 -->
 {% if messages %}
 {% for message in messages %}
-<br>
-<br>
+{% if message.tags == 'error' %}
 <div class="error-message">
-    {{ message.tags }}
     {{ message.message }}
 </div>
+{% endif %}
+
 {% endfor %}
 {% endif %}
 
@@ -70,7 +70,8 @@
                         <td>요청인</td>
                         <td>
                             <input type="text" name="sender" value="{{p.sender}}" readonly>
-                            <button type="button" class="btn" data-toggle="modal" data-target="#{{p.sender}}">고객등록</button>
+                            <button type="button" class="btn" data-toggle="modal"
+                                data-target="#{{p.sender}}">고객등록</button>
                             <!-- modal -->
                             <div class="modal" id="{{p.sender}}">
                                 <div class="modal-dialog">
