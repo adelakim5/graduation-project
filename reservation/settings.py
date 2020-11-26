@@ -1,11 +1,7 @@
-
-
 import os
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -13,12 +9,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "$&@n1s@u&&s($$us@=-snd(qpfw0!-@dhn&!@0&@-@0fnbd-!@")
 
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG'))
+DEBUG = True
+# bool(os.environ.get('DJANGO_DEBUG'))
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -27,7 +22,9 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'text',
     'accounts.apps.AccountsConfig',
-    'food.apps.FoodConfig',
+    'posts.apps.PostsConfig',
+    'home.apps.HomeConfig',
+    'carts.apps.CartsConfig',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
+    # 'crispy_forms',
     # 'ckeditor',
     # 'ckeditor_uploader',
     #

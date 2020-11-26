@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import auth, messages
 from django.contrib.auth.models import User, Group
-from food.models import Food
+from posts.models import Food
 from django.views import View
 from .forms import *
 from django.contrib.auth.decorators import login_required
