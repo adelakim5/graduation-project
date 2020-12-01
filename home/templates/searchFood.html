@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
-  
+<script defer src="{% static 'src/search.js' %}"></script>
+
 <main role="main">
     <section class="jumbotron text-center">
         <div class="container">
@@ -17,18 +18,6 @@
                 <a href="{% url 'search' %}?searchkeyword=떡볶이">떡볶이</a>
                 <a href="{% url 'search' %}?searchkeyword=돈까스">돈까스</a>
                 <a href="{% url 'search' %}?searchkeyword=고기">고기구이</a>
-                <script>
-                    let input = document.getElementById('searchBar')
-                    input.addEventListener('keydown', (e) => {
-                        if (e.keyCode == 13) {
-                            if (input.value == '') {
-                                alert('검색어를 입력해주세요.')
-                            } else {
-                                location.href = `/search/?searchkeyword=${input.value}`
-                            }
-                        }
-                    })
-                </script>
             </p>
         </div>
     </section>

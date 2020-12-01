@@ -1,63 +1,21 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
-<script>
-  let Notification = window.Notification || window.mozNotification || window.webkitNotification;
-  Notification.requestPermission((permission) => {
-    console.log(permission)
-  })
-  if (typeof (EventSource) !== "undefined") {
-    var source = new EventSource("stream/");
-    source.onmessage = function (event) {
-      if (event.data == "hi") {
-        new Notification(
-          "메세지 알림", {
-            body: "요청이 도착했습니다."
-          }
-        )
-      } else {
-        console.log(event.data)
-      }
-    };
-  } else {
-    console.log("Sorry, your browser does not support server-sent events...");
-  }
-</script>
+<link rel="stylesheet" href="{% static 'style/style.css' %}">
+<script defer src="{% static 'js/search.js'%}"></script>
 
 <main role="main">
-  <section class="jumbotron text-center">
+  <nav class="jumbotron text-center">
     <h1 class="jumbotron-heading font-weight-bold">궁동예약</h1>
     <p class="lead text-center">찾는 식당이 있나요? 바로 검색해보세요.</p>
-    <p class="a">
-      <input type="text" name="search_word" id="searchBar" placeholder="원하는 식당명을 검색하세요.">
-      <a href="{% url 'search' %}?searchkeyword=한식">한식</a>
-      <a href="{% url 'search' %}?searchkeyword=일식">일식</a>
-      <a href="{% url 'search' %}?searchkeyword=양식">양식</a>
-      <a href="{% url 'search' %}?searchkeyword=닭갈비">닭갈비</a>
-      <a href="{% url 'search' %}?searchkeyword=떡볶이">떡볶이</a>
-      <a href="{% url 'search' %}?searchkeyword=돈까스">돈까스</a>
-      <a href="{% url 'search' %}?searchkeyword=고기">고기구이</a>
-      <script>
-        let input = document.getElementById('searchBar')
-        input.addEventListener('keydown', (e) => {
-          if (e.keyCode == 13) {
-            if (input.value == '') {
-              alert('검색어를 입력해주세요.')
-            } else {
-              location.href = `/search/?searchkeyword=${input.value}`
-            }
-          }
-        })
-      </script>
-    </p>
-  </section>
+    <input type="text" name="search_word" id="searchBar" placeholder="검색">
+  </nav>
 
   <section>
     <h3 class="food font-weight-bold">궁동에 위치한 맛집을 찾아보세요</h3>
     <hr>
     {% for food in posts %}
-    <div class="row my-5 align-items-center">
+    <div class="row my-5 align-items-center food">
       <div class="col-lg-7">
         {% if food.image %}
         <a href="{% url 'detail' food.id %}">

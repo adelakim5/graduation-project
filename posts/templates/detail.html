@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="{% static 'style/style.css' %}">
+<script defer src="{% static 'js/sendRequest.js' %}"></script>
 <!--Page content-->
 <div class="container detail">
     <div class="row">
         <div class="col-7 col-lg-8">
-            <!--title-->
             <h1 class="mt-4">{{ food.title }}</h1>
-            <!--date/time, author-->
-            <p style="float: left;">작성자: {{ food.author }}({{food.author.user}})
-            </p>
+            <p style="float: left;">작성자: {{ food.author }}({{food.author.user}})</p>
             <p style="float: right;">마지막 게시일: {{ food.pub_date }}</p>
-            <!--image-->
             <img class="img-fluid rounded" src="{{ food.image.url }}" alt="photo">
             <hr>
             <!--post content-->
@@ -20,7 +17,7 @@
                 <p class="lead">{{ food.description }}</p>
             </blockquote>
             <hr>
-            <h4> 예약금액(1인 기준): {{ food.price }}원 </h4>
+            <h4> 예약금액(1인 기준): <span id="foodPrice">{{ food.price }}</span>원 </h4>
             <p>{{ food.body }}</p>
             <hr>
             <p>주소: {{food.address}}</p>
@@ -28,77 +25,23 @@
 
         <!--sideBar widgets column-->
         <div class="col-5 col-lg-4">
-            <!-- Search Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">다른식당 검색</h5>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="mini-search" name="search_word"
-                            placeholder="Search for...">
-                    </div>
-                </div>
-            </div>
-            <script>
-                let input = document.getElementById('mini-search')
-                input.addEventListener('keydown', (e) => {
-                    if (e.keyCode == 13) {
-                        if (input.value == '') {
-                            alert('검색어를 입력해주세요.')
-                        } else {
-                            location.href = `/search/?searchkeyword=${input.value}`
-                        }
-                    }
-                })
-            </script>
             <!--side widget-->
             {% if user.is_authenticated %}
             <div class="card my-4">
                 <h5 class="card-header">요청</h5>
                 <div class="card-body">
                     <!-- add to cart -->
-                    <form class="form-inline" id="reservation" method="POST" action="{% url 'cart' food.id %}">
+                    <form class="form-inline" id="reservation" method="POST"
+                        action="{% url 'customerAddCart' food.id %}">
                         {% csrf_token %}
-                        <input type="number" name="people" class="form-control" id="people" placeholder="인원 수를 적어주세요"
-                            min=1 required autofocus value="1">
+                        <input type="number" name="people" class="form-control" id="peopleSize"
+                            placeholder="인원 수를 적어주세요" min=1 required autofocus value="1">
                         <input type="number" name="total_price" class="form-control" id="total_price" placeholder="총 금액"
                             readonly>
                         <input type="text" name="phoneNum" id="phoneNum" hidden>
-                        <script>
-                            let total_price_input = document.getElementById('total_price')
-                            let people = document.getElementById('people')
-                            let limit = {{food.price}};
-                            total_price_input.value = parseInt(people.value) * limit
-
-                            let form = document.getElementById('reservation')
-                            // console.log(total_price_input)
-                            // console.log(people)
-                            let past = {{past_cart}}
-                            people.addEventListener('change', () => {
-                                cal()
-                            })
-
-                            function cal() {
-                                total_price = people.value * limit
-                                total_price_input.value = total_price
-                            }
-                            function number(){
-                                if(past == true){
-                                    alert('이미 요청한 내역이 있습니다')   
-                                }else{
-                                    let number = prompt("전화번호를 입력해주세요.\n※정확히 입력하여야 예약 알림 메시지를 받을 수 있습니다.※ \n (ex.010-1234-5678)")
-                                    let phoneInput = document.getElementById('phoneNum')
-                                    var regExp = /^(?:(010-?\d{4})|(01[1|6|7|8|9]-?\d{3,4}))-?\d{4}$/;
-                                    if (regExp.test(number)) {
-                                        phoneInput.value = number
-                                        form.submit()
-                                    } else {
-                                        alert("유효하지 않은 번호입니다.")
-                                    }
-                                }
-                            }                            
-                        </script>
+                        <span id="pastCart" style="visibility: hidden;">{{past_cart}}</span>
                     </form>
-                    <button class="btn btn-block" onclick="number()">요청하기</button>
+                    <button id="requestBtn" class="btn btn-block">요청하기</button>
                 </div>
             </div>
         </div>
@@ -108,7 +51,7 @@
 
 <!-- comment -->
 
-<form method="POST" class="post-form" action="{% url 'comment' food_id=food.id %}">
+<form method="POST" class="post-form" action="{% url 'addComments' food.id %}">
     {% csrf_token %}
     <button type="submit" id="review" class="save btn">후기 남기러가기</button>
 </form>
@@ -122,6 +65,5 @@
     <p>등록된 후기가 없습니다.</p>
     {% endfor %}
 </div>
-
 
 {% endblock %}

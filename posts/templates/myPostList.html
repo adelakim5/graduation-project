@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 <!--new.html content -->
@@ -8,8 +7,8 @@
         <div class="col-lg-3">
             <h4>게시글 조회 및 관리</h4>
             <div class="list-group">
-                <a href="{% url 'new' %}" class="list-group-item">게시글 작성</a>
-                <a href="{%url 'myposts'%}" class="list-group-item">게시글 조회 및 관리</a>
+                <a href="{% url 'writeNewPost' %}" class="list-group-item">글 작성</a>
+                <a href="{%url 'viewMyPostList'%}" class="list-group-item">글 관리</a>
             </div>
         </div>
         <div class="col-lg-9">

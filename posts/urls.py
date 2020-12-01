@@ -4,8 +4,9 @@ from . import views
 urlpatterns = [
     path('stream/', views.stream, name='stream'),
     path('<int:food_id>/', views.detail, name="detail"), 
-    path('new/', views.foodpost, name='new'),
-    path('new/post_retrieve/', views.post_retrieve, name="myposts"),
-    path('<int:food_id>/comment/', views.add_comment_to_food, name="comment"),
-    path('new/post_retrieve/<int:food_id>/edit/', views.edit, name="edit"),
+    path('writeNewPost/', views.writeNewPost, name='writeNewPost'),
+    path('viewMyPostList/', views.viewMyPostList, name="viewMyPostList"),
+    path('<int:food_id>/comment/', views.addComments, name="addComments"),
+    path('edit/<int:food_id>/', views.edit, name="edit"),
+    path('delete/<int:food_id>', views.delete, name="delete"),
 ]
